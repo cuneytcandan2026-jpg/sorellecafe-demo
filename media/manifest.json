@@ -1,0 +1,1355 @@
+{
+  "plates-marble": {
+    "source": "Images/sorelle-mediterranean-breakfast-eggs-royale-avocado.png",
+    "native": "1089x1444",
+    "placeholder": "#80664b",
+    "roles": {
+      "cover": {
+        "ar": 1.4,
+        "crop": "1089x778+0+1",
+        "stem": "plates-marble-cover",
+        "sizes": [
+          {
+            "w": 640,
+            "h": 457
+          },
+          {
+            "w": 960,
+            "h": 686
+          },
+          {
+            "w": 1089,
+            "h": 778
+          }
+        ]
+      },
+      "tall": {
+        "ar": 0.8,
+        "crop": "1089x1361+0+0",
+        "stem": "plates-marble-tall",
+        "sizes": [
+          {
+            "w": 480,
+            "h": 600
+          },
+          {
+            "w": 640,
+            "h": 800
+          },
+          {
+            "w": 1089,
+            "h": 1361
+          }
+        ]
+      },
+      "share": {
+        "ar": 1.9048,
+        "crop": "1089x572+0+61",
+        "stem": "plates-marble-share",
+        "sizes": [
+          {
+            "w": 1089,
+            "h": 572
+          }
+        ]
+      },
+      "landscape": {
+        "ar": 1.5,
+        "crop": "1089x726+0+215",
+        "stem": "plates-marble-landscape",
+        "sizes": [
+          {
+            "w": 420,
+            "h": 280
+          },
+          {
+            "w": 640,
+            "h": 427
+          },
+          {
+            "w": 900,
+            "h": 600
+          },
+          {
+            "w": 1089,
+            "h": 726
+          }
+        ]
+      }
+    }
+  },
+  "breakfast-medi": {
+    "source": "Images/sorelle-mediterranean-breakfast-eggs-royale-avocado.png",
+    "native": "1089x1444",
+    "placeholder": "#947051",
+    "roles": {
+      "square": {
+        "ar": 1,
+        "crop": "700x700+0+50",
+        "stem": "breakfast-medi-square",
+        "sizes": [
+          {
+            "w": 300,
+            "h": 300
+          },
+          {
+            "w": 480,
+            "h": 480
+          },
+          {
+            "w": 640,
+            "h": 640
+          },
+          {
+            "w": 700,
+            "h": 700
+          }
+        ]
+      },
+      "portrait": {
+        "ar": 0.8,
+        "crop": "640x800+30+0",
+        "stem": "breakfast-medi-portrait",
+        "sizes": [
+          {
+            "w": 320,
+            "h": 400
+          },
+          {
+            "w": 520,
+            "h": 650
+          },
+          {
+            "w": 640,
+            "h": 800
+          }
+        ]
+      },
+      "panel": {
+        "ar": 1.25,
+        "crop": "700x560+0+120",
+        "stem": "breakfast-medi-panel",
+        "sizes": [
+          {
+            "w": 380,
+            "h": 304
+          },
+          {
+            "w": 560,
+            "h": 448
+          },
+          {
+            "w": 700,
+            "h": 560
+          }
+        ]
+      },
+      "landscape": {
+        "ar": 1.5,
+        "crop": "700x467+0+167",
+        "stem": "breakfast-medi-landscape",
+        "sizes": [
+          {
+            "w": 420,
+            "h": 280
+          },
+          {
+            "w": 640,
+            "h": 427
+          },
+          {
+            "w": 700,
+            "h": 467
+          }
+        ]
+      },
+      "thumb": {
+        "ar": 1,
+        "crop": "700x700+0+50",
+        "stem": "breakfast-medi-thumb",
+        "sizes": [
+          {
+            "w": 120,
+            "h": 120
+          },
+          {
+            "w": 240,
+            "h": 240
+          }
+        ]
+      }
+    }
+  },
+  "brunch-avo-burst": {
+    "source": "Images/sorelle-american-dream-avocado-burst.png",
+    "native": "1091x1442",
+    "placeholder": "#948764",
+    "roles": {
+      "square": {
+        "ar": 1,
+        "crop": "600x600+442+0",
+        "stem": "brunch-avo-burst-square",
+        "sizes": [
+          {
+            "w": 300,
+            "h": 300
+          },
+          {
+            "w": 480,
+            "h": 480
+          },
+          {
+            "w": 600,
+            "h": 600
+          }
+        ]
+      },
+      "portrait": {
+        "ar": 0.8,
+        "crop": "480x600+502+0",
+        "stem": "brunch-avo-burst-portrait",
+        "sizes": [
+          {
+            "w": 320,
+            "h": 400
+          },
+          {
+            "w": 480,
+            "h": 600
+          }
+        ]
+      },
+      "panel": {
+        "ar": 1.25,
+        "crop": "750x600+341+0",
+        "stem": "brunch-avo-burst-panel",
+        "sizes": [
+          {
+            "w": 380,
+            "h": 304
+          },
+          {
+            "w": 560,
+            "h": 448
+          },
+          {
+            "w": 750,
+            "h": 600
+          }
+        ]
+      },
+      "landscape": {
+        "ar": 1.5,
+        "crop": "900x600+191+0",
+        "stem": "brunch-avo-burst-landscape",
+        "sizes": [
+          {
+            "w": 420,
+            "h": 280
+          },
+          {
+            "w": 640,
+            "h": 427
+          },
+          {
+            "w": 900,
+            "h": 600
+          }
+        ]
+      },
+      "thumb": {
+        "ar": 1,
+        "crop": "600x600+442+0",
+        "stem": "brunch-avo-burst-thumb",
+        "sizes": [
+          {
+            "w": 120,
+            "h": 120
+          },
+          {
+            "w": 240,
+            "h": 240
+          }
+        ]
+      }
+    }
+  },
+  "plates-held": {
+    "source": "Images/sorelle-american-dream-avocado-burst.png",
+    "native": "1091x1442",
+    "placeholder": "#907a61",
+    "roles": {
+      "square": {
+        "ar": 1,
+        "crop": "1091x1091+0+103",
+        "stem": "plates-held-square",
+        "sizes": [
+          {
+            "w": 300,
+            "h": 300
+          },
+          {
+            "w": 480,
+            "h": 480
+          },
+          {
+            "w": 640,
+            "h": 640
+          },
+          {
+            "w": 1091,
+            "h": 1091
+          }
+        ]
+      },
+      "portrait": {
+        "ar": 0.8,
+        "crop": "1091x1364+0+0",
+        "stem": "plates-held-portrait",
+        "sizes": [
+          {
+            "w": 320,
+            "h": 400
+          },
+          {
+            "w": 520,
+            "h": 650
+          },
+          {
+            "w": 760,
+            "h": 950
+          },
+          {
+            "w": 1091,
+            "h": 1364
+          }
+        ]
+      },
+      "panel": {
+        "ar": 1.25,
+        "crop": "1091x873+0+212",
+        "stem": "plates-held-panel",
+        "sizes": [
+          {
+            "w": 380,
+            "h": 304
+          },
+          {
+            "w": 560,
+            "h": 448
+          },
+          {
+            "w": 760,
+            "h": 608
+          },
+          {
+            "w": 1091,
+            "h": 873
+          }
+        ]
+      },
+      "landscape": {
+        "ar": 1.5,
+        "crop": "1091x727+0+285",
+        "stem": "plates-held-landscape",
+        "sizes": [
+          {
+            "w": 420,
+            "h": 280
+          },
+          {
+            "w": 640,
+            "h": 427
+          },
+          {
+            "w": 900,
+            "h": 600
+          },
+          {
+            "w": 1091,
+            "h": 727
+          }
+        ]
+      },
+      "thumb": {
+        "ar": 1,
+        "crop": "1091x1091+0+103",
+        "stem": "plates-held-thumb",
+        "sizes": [
+          {
+            "w": 120,
+            "h": 120
+          },
+          {
+            "w": 240,
+            "h": 240
+          }
+        ]
+      }
+    }
+  },
+  "brunch-sorelle-classic": {
+    "source": "Images/sorelle-smash.png",
+    "native": "1095x1437",
+    "placeholder": "#887a57",
+    "roles": {
+      "square": {
+        "ar": 1,
+        "crop": "1095x1095+0+128",
+        "stem": "brunch-sorelle-classic-square",
+        "sizes": [
+          {
+            "w": 300,
+            "h": 300
+          },
+          {
+            "w": 480,
+            "h": 480
+          },
+          {
+            "w": 640,
+            "h": 640
+          },
+          {
+            "w": 1095,
+            "h": 1095
+          }
+        ]
+      },
+      "portrait": {
+        "ar": 0.8,
+        "crop": "1095x1369+0+0",
+        "stem": "brunch-sorelle-classic-portrait",
+        "sizes": [
+          {
+            "w": 320,
+            "h": 400
+          },
+          {
+            "w": 520,
+            "h": 650
+          },
+          {
+            "w": 760,
+            "h": 950
+          },
+          {
+            "w": 1095,
+            "h": 1369
+          }
+        ]
+      },
+      "panel": {
+        "ar": 1.25,
+        "crop": "1095x876+0+237",
+        "stem": "brunch-sorelle-classic-panel",
+        "sizes": [
+          {
+            "w": 380,
+            "h": 304
+          },
+          {
+            "w": 560,
+            "h": 448
+          },
+          {
+            "w": 760,
+            "h": 608
+          },
+          {
+            "w": 1095,
+            "h": 876
+          }
+        ]
+      },
+      "landscape": {
+        "ar": 1.5,
+        "crop": "1095x730+0+310",
+        "stem": "brunch-sorelle-classic-landscape",
+        "sizes": [
+          {
+            "w": 420,
+            "h": 280
+          },
+          {
+            "w": 640,
+            "h": 427
+          },
+          {
+            "w": 900,
+            "h": 600
+          },
+          {
+            "w": 1095,
+            "h": 730
+          }
+        ]
+      },
+      "thumb": {
+        "ar": 1,
+        "crop": "1095x1095+0+128",
+        "stem": "brunch-sorelle-classic-thumb",
+        "sizes": [
+          {
+            "w": 120,
+            "h": 120
+          },
+          {
+            "w": 240,
+            "h": 240
+          }
+        ]
+      }
+    }
+  },
+  "table-spread": {
+    "source": "Images/sorelle-breakfast-spread.png",
+    "native": "989x1589",
+    "placeholder": "#8f816a",
+    "roles": {
+      "square": {
+        "ar": 1,
+        "crop": "989x989+0+173",
+        "stem": "table-spread-square",
+        "sizes": [
+          {
+            "w": 300,
+            "h": 300
+          },
+          {
+            "w": 480,
+            "h": 480
+          },
+          {
+            "w": 640,
+            "h": 640
+          },
+          {
+            "w": 989,
+            "h": 989
+          }
+        ]
+      },
+      "portrait": {
+        "ar": 0.8,
+        "crop": "989x1236+0+0",
+        "stem": "table-spread-portrait",
+        "sizes": [
+          {
+            "w": 320,
+            "h": 400
+          },
+          {
+            "w": 520,
+            "h": 650
+          },
+          {
+            "w": 760,
+            "h": 950
+          },
+          {
+            "w": 989,
+            "h": 1236
+          }
+        ]
+      },
+      "panel": {
+        "ar": 1.25,
+        "crop": "989x791+0+272",
+        "stem": "table-spread-panel",
+        "sizes": [
+          {
+            "w": 380,
+            "h": 304
+          },
+          {
+            "w": 560,
+            "h": 448
+          },
+          {
+            "w": 760,
+            "h": 608
+          },
+          {
+            "w": 989,
+            "h": 791
+          }
+        ]
+      },
+      "landscape": {
+        "ar": 1.5,
+        "crop": "989x659+0+386",
+        "stem": "table-spread-landscape",
+        "sizes": [
+          {
+            "w": 420,
+            "h": 280
+          },
+          {
+            "w": 640,
+            "h": 427
+          },
+          {
+            "w": 900,
+            "h": 600
+          },
+          {
+            "w": 989,
+            "h": 659
+          }
+        ]
+      },
+      "thumb": {
+        "ar": 1,
+        "crop": "989x989+0+173",
+        "stem": "table-spread-thumb",
+        "sizes": [
+          {
+            "w": 120,
+            "h": 120
+          },
+          {
+            "w": 240,
+            "h": 240
+          }
+        ]
+      }
+    }
+  },
+  "lunch-chicken-caesar": {
+    "source": "Images/sorelle-chicken-caesar-salad.png",
+    "native": "1197x1314",
+    "placeholder": "#c4b49d",
+    "roles": {
+      "square": {
+        "ar": 1,
+        "crop": "1197x1197+0+59",
+        "stem": "lunch-chicken-caesar-square",
+        "sizes": [
+          {
+            "w": 300,
+            "h": 300
+          },
+          {
+            "w": 480,
+            "h": 480
+          },
+          {
+            "w": 640,
+            "h": 640
+          },
+          {
+            "w": 1197,
+            "h": 1197
+          }
+        ]
+      },
+      "portrait": {
+        "ar": 0.8,
+        "crop": "1051x1314+73+0",
+        "stem": "lunch-chicken-caesar-portrait",
+        "sizes": [
+          {
+            "w": 320,
+            "h": 400
+          },
+          {
+            "w": 520,
+            "h": 650
+          },
+          {
+            "w": 760,
+            "h": 950
+          },
+          {
+            "w": 1051,
+            "h": 1314
+          }
+        ]
+      },
+      "panel": {
+        "ar": 1.25,
+        "crop": "1197x958+0+178",
+        "stem": "lunch-chicken-caesar-panel",
+        "sizes": [
+          {
+            "w": 380,
+            "h": 304
+          },
+          {
+            "w": 560,
+            "h": 448
+          },
+          {
+            "w": 760,
+            "h": 608
+          },
+          {
+            "w": 1197,
+            "h": 958
+          }
+        ]
+      },
+      "landscape": {
+        "ar": 1.5,
+        "crop": "1197x798+0+258",
+        "stem": "lunch-chicken-caesar-landscape",
+        "sizes": [
+          {
+            "w": 420,
+            "h": 280
+          },
+          {
+            "w": 640,
+            "h": 427
+          },
+          {
+            "w": 900,
+            "h": 600
+          },
+          {
+            "w": 1197,
+            "h": 798
+          }
+        ]
+      },
+      "thumb": {
+        "ar": 1,
+        "crop": "1197x1197+0+59",
+        "stem": "lunch-chicken-caesar-thumb",
+        "sizes": [
+          {
+            "w": 120,
+            "h": 120
+          },
+          {
+            "w": 240,
+            "h": 240
+          }
+        ]
+      }
+    }
+  },
+  "drinks-sign": {
+    "source": "Images/sorelle-drinks-sign.png",
+    "native": "1122x1402",
+    "placeholder": "#e4d9cc",
+    "roles": {
+      "square": {
+        "ar": 1,
+        "crop": "1122x1122+0+210",
+        "stem": "drinks-sign-square",
+        "sizes": [
+          {
+            "w": 300,
+            "h": 300
+          },
+          {
+            "w": 480,
+            "h": 480
+          },
+          {
+            "w": 640,
+            "h": 640
+          },
+          {
+            "w": 1122,
+            "h": 1122
+          }
+        ]
+      },
+      "portrait": {
+        "ar": 0.8,
+        "crop": "1122x1402+0+0",
+        "stem": "drinks-sign-portrait",
+        "sizes": [
+          {
+            "w": 320,
+            "h": 400
+          },
+          {
+            "w": 520,
+            "h": 650
+          },
+          {
+            "w": 760,
+            "h": 950
+          },
+          {
+            "w": 1122,
+            "h": 1403
+          }
+        ]
+      },
+      "panel": {
+        "ar": 1.25,
+        "crop": "1122x898+0+322",
+        "stem": "drinks-sign-panel",
+        "sizes": [
+          {
+            "w": 380,
+            "h": 304
+          },
+          {
+            "w": 560,
+            "h": 448
+          },
+          {
+            "w": 760,
+            "h": 608
+          },
+          {
+            "w": 1122,
+            "h": 898
+          }
+        ]
+      },
+      "landscape": {
+        "ar": 1.5,
+        "crop": "1122x748+0+397",
+        "stem": "drinks-sign-landscape",
+        "sizes": [
+          {
+            "w": 420,
+            "h": 280
+          },
+          {
+            "w": 640,
+            "h": 427
+          },
+          {
+            "w": 900,
+            "h": 600
+          },
+          {
+            "w": 1122,
+            "h": 748
+          }
+        ]
+      },
+      "thumb": {
+        "ar": 1,
+        "crop": "1122x1122+0+210",
+        "stem": "drinks-sign-thumb",
+        "sizes": [
+          {
+            "w": 120,
+            "h": 120
+          },
+          {
+            "w": 240,
+            "h": 240
+          }
+        ]
+      }
+    }
+  },
+  "coffee-latte-art": {
+    "source": "Images/sorelle-latte-art.png",
+    "native": "959x1640",
+    "placeholder": "#a48873",
+    "roles": {
+      "square": {
+        "ar": 1,
+        "crop": "959x959+0+439",
+        "stem": "coffee-latte-art-square",
+        "sizes": [
+          {
+            "w": 300,
+            "h": 300
+          },
+          {
+            "w": 480,
+            "h": 480
+          },
+          {
+            "w": 640,
+            "h": 640
+          },
+          {
+            "w": 959,
+            "h": 959
+          }
+        ]
+      },
+      "portrait": {
+        "ar": 0.8,
+        "crop": "959x1199+0+319",
+        "stem": "coffee-latte-art-portrait",
+        "sizes": [
+          {
+            "w": 320,
+            "h": 400
+          },
+          {
+            "w": 520,
+            "h": 650
+          },
+          {
+            "w": 760,
+            "h": 950
+          },
+          {
+            "w": 959,
+            "h": 1199
+          }
+        ]
+      },
+      "panel": {
+        "ar": 1.25,
+        "crop": "959x767+0+535",
+        "stem": "coffee-latte-art-panel",
+        "sizes": [
+          {
+            "w": 380,
+            "h": 304
+          },
+          {
+            "w": 560,
+            "h": 448
+          },
+          {
+            "w": 760,
+            "h": 608
+          },
+          {
+            "w": 959,
+            "h": 767
+          }
+        ]
+      },
+      "landscape": {
+        "ar": 1.5,
+        "crop": "959x639+0+599",
+        "stem": "coffee-latte-art-landscape",
+        "sizes": [
+          {
+            "w": 420,
+            "h": 280
+          },
+          {
+            "w": 640,
+            "h": 427
+          },
+          {
+            "w": 900,
+            "h": 600
+          },
+          {
+            "w": 959,
+            "h": 639
+          }
+        ]
+      },
+      "thumb": {
+        "ar": 1,
+        "crop": "959x959+0+439",
+        "stem": "coffee-latte-art-thumb",
+        "sizes": [
+          {
+            "w": 120,
+            "h": 120
+          },
+          {
+            "w": 240,
+            "h": 240
+          }
+        ]
+      }
+    }
+  },
+  "coffee-tray": {
+    "source": "Images/sorelle-iced-latte-cappuccino.png",
+    "native": "1074x1465",
+    "placeholder": "#746453",
+    "roles": {
+      "square": {
+        "ar": 1,
+        "crop": "1074x1074+0+122",
+        "stem": "coffee-tray-square",
+        "sizes": [
+          {
+            "w": 300,
+            "h": 300
+          },
+          {
+            "w": 480,
+            "h": 480
+          },
+          {
+            "w": 640,
+            "h": 640
+          },
+          {
+            "w": 1074,
+            "h": 1074
+          }
+        ]
+      },
+      "portrait": {
+        "ar": 0.8,
+        "crop": "1074x1343+0+0",
+        "stem": "coffee-tray-portrait",
+        "sizes": [
+          {
+            "w": 320,
+            "h": 400
+          },
+          {
+            "w": 520,
+            "h": 650
+          },
+          {
+            "w": 760,
+            "h": 950
+          },
+          {
+            "w": 1074,
+            "h": 1343
+          }
+        ]
+      },
+      "panel": {
+        "ar": 1.25,
+        "crop": "1074x859+0+230",
+        "stem": "coffee-tray-panel",
+        "sizes": [
+          {
+            "w": 380,
+            "h": 304
+          },
+          {
+            "w": 560,
+            "h": 448
+          },
+          {
+            "w": 760,
+            "h": 608
+          },
+          {
+            "w": 1074,
+            "h": 859
+          }
+        ]
+      },
+      "landscape": {
+        "ar": 1.5,
+        "crop": "1074x716+0+301",
+        "stem": "coffee-tray-landscape",
+        "sizes": [
+          {
+            "w": 420,
+            "h": 280
+          },
+          {
+            "w": 640,
+            "h": 427
+          },
+          {
+            "w": 900,
+            "h": 600
+          },
+          {
+            "w": 1074,
+            "h": 716
+          }
+        ]
+      },
+      "thumb": {
+        "ar": 1,
+        "crop": "1074x1074+0+122",
+        "stem": "coffee-tray-thumb",
+        "sizes": [
+          {
+            "w": 120,
+            "h": 120
+          },
+          {
+            "w": 240,
+            "h": 240
+          }
+        ]
+      }
+    }
+  },
+  "iced-latte-cake": {
+    "source": "Images/sorelle-iced-latte-dessert.png",
+    "native": "1064x1478",
+    "placeholder": "#927d69",
+    "roles": {
+      "square": {
+        "ar": 1,
+        "crop": "1064x1064+0+89",
+        "stem": "iced-latte-cake-square",
+        "sizes": [
+          {
+            "w": 300,
+            "h": 300
+          },
+          {
+            "w": 480,
+            "h": 480
+          },
+          {
+            "w": 640,
+            "h": 640
+          },
+          {
+            "w": 1064,
+            "h": 1064
+          }
+        ]
+      },
+      "portrait": {
+        "ar": 0.8,
+        "crop": "1064x1330+0+0",
+        "stem": "iced-latte-cake-portrait",
+        "sizes": [
+          {
+            "w": 320,
+            "h": 400
+          },
+          {
+            "w": 520,
+            "h": 650
+          },
+          {
+            "w": 760,
+            "h": 950
+          },
+          {
+            "w": 1064,
+            "h": 1330
+          }
+        ]
+      },
+      "panel": {
+        "ar": 1.25,
+        "crop": "1064x851+0+195",
+        "stem": "iced-latte-cake-panel",
+        "sizes": [
+          {
+            "w": 380,
+            "h": 304
+          },
+          {
+            "w": 560,
+            "h": 448
+          },
+          {
+            "w": 760,
+            "h": 608
+          },
+          {
+            "w": 1064,
+            "h": 851
+          }
+        ]
+      },
+      "landscape": {
+        "ar": 1.5,
+        "crop": "1064x709+0+266",
+        "stem": "iced-latte-cake-landscape",
+        "sizes": [
+          {
+            "w": 420,
+            "h": 280
+          },
+          {
+            "w": 640,
+            "h": 427
+          },
+          {
+            "w": 900,
+            "h": 600
+          },
+          {
+            "w": 1064,
+            "h": 709
+          }
+        ]
+      },
+      "thumb": {
+        "ar": 1,
+        "crop": "1064x1064+0+89",
+        "stem": "iced-latte-cake-thumb",
+        "sizes": [
+          {
+            "w": 120,
+            "h": 120
+          },
+          {
+            "w": 240,
+            "h": 240
+          }
+        ]
+      }
+    }
+  },
+  "shopfront-coffee": {
+    "source": "Images/sorelle-moment-coffee.png",
+    "native": "1120x1405",
+    "placeholder": "#8e817a",
+    "roles": {
+      "square": {
+        "ar": 1,
+        "crop": "1120x1120+0+143",
+        "stem": "shopfront-coffee-square",
+        "sizes": [
+          {
+            "w": 300,
+            "h": 300
+          },
+          {
+            "w": 480,
+            "h": 480
+          },
+          {
+            "w": 640,
+            "h": 640
+          },
+          {
+            "w": 1120,
+            "h": 1120
+          }
+        ]
+      },
+      "portrait": {
+        "ar": 0.8,
+        "crop": "1120x1400+0+3",
+        "stem": "shopfront-coffee-portrait",
+        "sizes": [
+          {
+            "w": 320,
+            "h": 400
+          },
+          {
+            "w": 520,
+            "h": 650
+          },
+          {
+            "w": 760,
+            "h": 950
+          },
+          {
+            "w": 1120,
+            "h": 1400
+          }
+        ]
+      },
+      "panel": {
+        "ar": 1.25,
+        "crop": "1120x896+0+255",
+        "stem": "shopfront-coffee-panel",
+        "sizes": [
+          {
+            "w": 380,
+            "h": 304
+          },
+          {
+            "w": 560,
+            "h": 448
+          },
+          {
+            "w": 760,
+            "h": 608
+          },
+          {
+            "w": 1120,
+            "h": 896
+          }
+        ]
+      },
+      "landscape": {
+        "ar": 1.5,
+        "crop": "1120x747+0+329",
+        "stem": "shopfront-coffee-landscape",
+        "sizes": [
+          {
+            "w": 420,
+            "h": 280
+          },
+          {
+            "w": 640,
+            "h": 427
+          },
+          {
+            "w": 900,
+            "h": 600
+          },
+          {
+            "w": 1120,
+            "h": 747
+          }
+        ]
+      },
+      "thumb": {
+        "ar": 1,
+        "crop": "1120x1120+0+143",
+        "stem": "shopfront-coffee-thumb",
+        "sizes": [
+          {
+            "w": 120,
+            "h": 120
+          },
+          {
+            "w": 240,
+            "h": 240
+          }
+        ]
+      }
+    }
+  },
+  "placeholder-interior": {
+    "source": "Images/WidePhoto.png",
+    "native": "1932x814",
+    "placeholder": "#726150",
+    "roles": {
+      "cover": {
+        "ar": 1.4,
+        "crop": "1140x814+0+0",
+        "stem": "placeholder-interior-cover",
+        "sizes": [
+          {
+            "w": 640,
+            "h": 457
+          },
+          {
+            "w": 960,
+            "h": 686
+          },
+          {
+            "w": 1140,
+            "h": 814
+          }
+        ]
+      },
+      "tall": {
+        "ar": 0.8,
+        "crop": "651x814+0+0",
+        "stem": "placeholder-interior-tall",
+        "sizes": [
+          {
+            "w": 480,
+            "h": 600
+          },
+          {
+            "w": 640,
+            "h": 800
+          }
+        ]
+      },
+      "share": {
+        "ar": 1.9048,
+        "crop": "1550x814+0+0",
+        "stem": "placeholder-interior-share",
+        "sizes": [
+          {
+            "w": 1200,
+            "h": 630
+          }
+        ]
+      }
+    }
+  }
+}

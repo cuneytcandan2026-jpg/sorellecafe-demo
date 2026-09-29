@@ -1,0 +1,231 @@
+/* ==========================================================================
+   Events page
+   --------------------------------------------------------------------------
+   The café's event flyer frames everything in an arch: two thin lines, one
+   inside the other, square at the foot. Here it is an ivory window on the
+   blush page, and the event is set inside it the way the flyer sets it: the
+   title in Bodoni, the café's name in spaced capitals, the day and the start
+   time large on either side of a small star, then the price and the address.
+
+   The arch is border-radius, not an image, so it stays a true semicircle at
+   any width: a radius far larger than the box is scaled down by the browser
+   until the two top corners meet, which leaves exactly half the width. The
+   window's own background takes the shape; its ::before and ::after are the
+   two lines, the inner one inset, so the curves share a centre.
+
+   As the window is revealed the lines draw up from the ground: a mask
+   uncovers them from the bottom, so both sides rise together and meet at
+   the top, the inner line a beat behind. With reduced motion, without a
+   script and in print, they are simply there.
+   ========================================================================== */
+
+@property --arch-drawn {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 100%;
+}
+
+.ev-page {
+  padding-block: clamp(1.75rem, 1rem + 2.6vw, 3rem) var(--pad-section);
+}
+.ev-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(2.5rem, 1.6rem + 3.6vw, 4.5rem);
+  align-items: center;
+}
+@media (min-width: 60rem) {
+  .ev-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 30rem); }
+}
+
+/* ---- The page's own words ----------------------------------------------- */
+.ev-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--s-4);
+}
+.ev-copy h1 { margin: var(--s-2) 0 0; }
+.ev-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-3);
+  margin-top: var(--s-3);
+}
+.ev-hire {
+  margin: 0;
+  font-size: var(--t-small);
+  color: var(--c-mute);
+}
+
+/* ---- The arch ------------------------------------------------------------ */
+.ev-list {
+  display: grid;
+  gap: var(--s-7);
+  justify-items: center;
+}
+.ev { width: 100%; max-width: 30rem; }
+
+.ev-arch {
+  --ev-line: var(--rule-strong);
+  --ev-inset: clamp(0.5rem, 0.4rem + 0.4vw, 0.75rem);
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--s-3);
+  padding:
+    clamp(4rem, 3rem + 4vw, 6rem)
+    clamp(1.75rem, 1rem + 3vw, 3rem)
+    clamp(2rem, 1.6rem + 1.6vw, 3rem);
+  border-radius: 100vmax 100vmax 0 0;
+  background: var(--c-paper);
+  text-align: center;
+}
+.ev-arch::before,
+.ev-arch::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border: 1px solid var(--ev-line);
+  border-radius: inherit;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(to top, #000 var(--arch-drawn), transparent var(--arch-drawn));
+  mask-image: linear-gradient(to top, #000 var(--arch-drawn), transparent var(--arch-drawn));
+}
+.ev-arch::after { inset: var(--ev-inset); }
+
+/* A keyframe animation rather than a transition: an arch on screen at load
+   is marked ready and revealed in the same frame (scripts/motion.js), which
+   leaves a transition nothing to start from. An animation runs from its
+   first keyframe whenever it is applied, so the lines still draw on arrival
+   while the words inside are there from the first paint. Its start is
+   multiplied by --motion-scale, and reduced motion also switches it off. */
+@keyframes arch-draw {
+  from { --arch-drawn: calc(100% - 100% * var(--motion-scale)); }
+  to { --arch-drawn: 100%; }
+}
+.ev-arch[data-reveal-ready]:not(.is-revealed)::before,
+.ev-arch[data-reveal-ready]:not(.is-revealed)::after {
+  --arch-drawn: calc(100% - 100% * var(--motion-scale));
+}
+.ev-arch[data-reveal-ready].is-revealed::before,
+.ev-arch[data-reveal-ready].is-revealed::after {
+  animation: arch-draw 1600ms var(--ease-soft) 180ms backwards;
+}
+.ev-arch[data-reveal-ready].is-revealed::after { animation-delay: 460ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ev-arch::before,
+  .ev-arch::after { animation: none !important; }
+}
+html[data-motion='reduced'] .ev-arch::before,
+html[data-motion='reduced'] .ev-arch::after { animation: none !important; }
+
+/* ---- Inside the arch ------------------------------------------------------ */
+.ev-flag {
+  margin: 0 0 var(--s-2);
+  padding: 0.4rem 0.95rem 0.35rem;
+  border-radius: var(--r-pill);
+  background: var(--c-ink);
+  color: var(--c-paper);
+  font-size: var(--t-eyebrow);
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+/* A past event keeps its page but loses the filled label. */
+.ev[data-past] .ev-flag {
+  background: transparent;
+  color: var(--c-mute);
+  box-shadow: inset 0 0 0 1px var(--rule-strong);
+}
+
+.ev-title {
+  margin: 0;
+  font-size: clamp(2.75rem, 2rem + 3.2vw, 4.25rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+.ev-at {
+  margin: 0;
+  font-size: var(--t-eyebrow);
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--c-mute);
+}
+
+.ev-when {
+  width: 100%;
+  margin: var(--s-4) 0 0;
+}
+.ev-when time {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: var(--s-3);
+}
+.ev-side {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1;
+}
+.ev-label {
+  margin-bottom: 0.55rem;
+  font-size: var(--t-eyebrow);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--c-mute);
+}
+.ev-big {
+  font-family: var(--font-display);
+  font-size: clamp(3.25rem, 2.5rem + 3.2vw, 5rem);
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+  font-variant-numeric: lining-nums;
+}
+.ev-unit {
+  margin-top: 0.4rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 1.05rem + 0.8vw, 1.625rem);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.ev-star {
+  display: block;
+  width: clamp(1.25rem, 1rem + 1vw, 1.75rem);
+  color: var(--c-mute);
+}
+.ev-star svg { display: block; width: 100%; height: auto; }
+
+.ev-tbc { margin: 0; }
+.ev-price {
+  max-width: 24ch;
+  margin: var(--s-4) 0 0;
+  font-size: var(--t-lead);
+  line-height: 1.4;
+}
+.ev-where {
+  font-size: var(--t-small);
+  font-style: normal;
+  line-height: 1.5;
+  color: var(--c-mute);
+}
+
+.ev-none {
+  font-size: var(--t-lead);
+  color: var(--c-mute);
+}
+
+@media print {
+  .ev-arch::before,
+  .ev-arch::after {
+    -webkit-mask-image: none !important;
+    mask-image: none !important;
+  }
+}

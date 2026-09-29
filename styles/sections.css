@@ -1,0 +1,995 @@
+/* ==========================================================================
+   Sections - atmosphere, editorial rows, gallery, visit, footer, extras
+   ========================================================================== */
+
+/* ==========================================================================
+   5. ATMOSPHERE - editorial split + photo stack
+   ========================================================================== */
+.atmos-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(2.5rem, 1.5rem + 4vw, 4.5rem);
+  align-items: center;
+}
+@media (min-width: 64rem) {
+  .atmos-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1.08fr); }
+}
+
+.atmos-copy { display: grid; gap: var(--s-5); align-content: start; }
+.atmos-copy h2 { max-width: 15ch; }
+
+.atmos-labels { display: grid; gap: var(--s-2); }
+.atmos-label {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  width: 100%;
+  min-height: 3.25rem;
+  padding: 0.6rem 1rem 0.6rem 0.75rem;
+  border: 2px solid transparent;
+  border-radius: var(--r-pill);
+  text-align: left;
+  font-weight: 500;
+  color: var(--c-on-dark);
+  transition: background-color var(--d-control) var(--ease-firm),
+              border-color var(--d-control) var(--ease-firm);
+}
+.atmos-label:hover { background: color-mix(in srgb, var(--c-on-dark) 10%, transparent); }
+.atmos-label .num {
+  display: grid;
+  place-items: center;
+  width: 2rem; height: 2rem;
+  flex: none;
+  border-radius: 50%;
+  border: 1px solid color-mix(in srgb, var(--c-on-dark) 32%, transparent);
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  transition: background-color var(--d-control) var(--ease-firm),
+              color var(--d-control) var(--ease-firm),
+              border-color var(--d-control) var(--ease-firm);
+}
+.atmos-label[aria-selected='true'] {
+  background: color-mix(in srgb, var(--c-brand-light) 16%, transparent);
+  border-color: var(--c-brand-light);
+}
+.atmos-label[aria-selected='true'] .num {
+  background: var(--c-brand-light);
+  border-color: var(--c-brand-light);
+  color: var(--c-brand-deepest);
+}
+
+.atmos-readout {
+  min-height: 6.5rem;
+  color: var(--c-on-dark-mute);
+  transition: opacity var(--d-swap) var(--ease-out);
+}
+.atmos-readout.is-swapping { opacity: 0; }
+@media (min-width: 48rem) { .atmos-readout { min-height: 5.5rem; } }
+
+/* ---- The stack --------------------------------------------------------------- */
+.atmos-stack {
+  position: relative;
+  width: min(100%, 32rem);
+  margin-inline: auto;
+  /* Square: the venue photograph is landscape and the food shots are portrait,
+     so a square frame is the one crop that serves all three honestly. */
+  aspect-ratio: 1;
+}
+@media (min-width: 64rem) { .atmos-stack { width: min(100%, 34rem); margin-inline: 0 auto; } }
+
+.atmos-print {
+  position: absolute;
+  /* Inset rather than filling the stack, so the fanned offsets below have
+     room to move into. (An absolutely positioned child resolves `inset`
+     against the padding box, so padding on the stack would not do this.) */
+  inset: 6% 8%;
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  border: 8px solid var(--c-cream);
+  background: var(--ph, var(--c-shell));
+  box-shadow: var(--shadow-lift);
+  /* Rotation stays inside the brief's +/-4deg limit. */
+  transform: rotate(var(--rot, 0deg)) translate(var(--tx, 0), var(--ty, 0));
+  /* Selecting a print re-deals the stack. --ease-spring on the transform lets
+     each print overshoot its resting tilt very slightly and settle, which
+     reads as a card being placed rather than slid. Opacity stays on
+     --ease-out: a fade that overshoots would flicker. */
+  transition: transform var(--d-select) var(--ease-spring),
+              opacity var(--d-select) var(--ease-out);
+  will-change: transform;
+}
+/* --atmos-pan is driven by a scroll-linked animation on .atmos-stack (see
+   motion.css); it is 0% at rest, and in any browser without scroll-driven
+   animations the fallback keeps it at 0% permanently. `cover` has already
+   cropped these images, so panning moves through real image data rather than
+   requiring them to be scaled up. */
+.atmos-print img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% calc(50% + var(--atmos-pan, 0%));
+}
+.atmos-print[data-state='back']  { --rot: -3.8deg; --tx: -7%; --ty: -5%; z-index: 1; }
+.atmos-print[data-state='mid']   { --rot: 3.2deg;  --tx: 6%;  --ty: 4%;  z-index: 2; }
+.atmos-print[data-state='front'] { --rot: -0.8deg; --tx: 0;    --ty: 0;   z-index: 3; }
+/* On a phone the same percentages push the back prints well past the front
+   one, so the fan closes up to an even border. */
+@media (max-width: 47.99rem) {
+  .atmos-print[data-state='back'] { --rot: -2.6deg; --tx: -3.5%; --ty: -2.5%; }
+  .atmos-print[data-state='mid']  { --rot: 2.2deg;  --tx: 3%;    --ty: 2%; }
+}
+
+.atmos-caption {
+  position: absolute;
+  left: 50%;
+  bottom: -1.1rem;
+  z-index: 4;
+  transform: translateX(-50%);
+  padding: 0.5rem 1.1rem;
+  border-radius: var(--r-pill);
+  background: var(--c-brand-light);
+  color: var(--c-brand-deepest);
+  font-size: var(--t-small);
+  font-weight: 500;
+  white-space: nowrap;
+  box-shadow: var(--shadow-float);
+}
+
+/* ==========================================================================
+   6. EDITORIAL CALL-TO-ACTION ROWS
+   ========================================================================== */
+.rows { border-top: 1px solid var(--rule); }
+
+.row-link {
+  position: relative;
+  display: grid;
+  gap: var(--s-4);
+  grid-template-columns: minmax(0, 1fr);
+  align-items: center;
+  padding-block: clamp(1.75rem, 1.2rem + 2.4vw, 3rem);
+  padding-inline: clamp(0.75rem, 0.2rem + 1.6vw, 1.75rem);
+  margin-inline: clamp(-1.75rem, -0.2rem - 1.6vw, -0.75rem);
+  border-bottom: 1px solid var(--rule);
+  text-decoration: none;
+  color: var(--fg);
+  /* The decorative preview sits behind this content. */
+  isolation: isolate;
+  transition: color var(--d-control) var(--ease-firm);
+}
+/* The whole row fills with the brand colour on hover and keyboard focus - the
+   largest single use of the accent colour on the page, and the thing that
+   makes these rows feel like destinations rather than list items. */
+.row-link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: var(--r-md);
+  background: var(--c-brand);
+  transform-origin: left center;
+  /* A SCALE wipe, not a translate. Translating the fill out of frame by its
+     own width leaves it hanging past the left edge of the page - and because
+     the row is wider than its own distance from the viewport edge, a sliver
+     of colour stayed visible in the gutter of every row. Scaling from zero
+     can never leave the element's own box. */
+  transform: scaleX(0);
+  transition: transform 520ms var(--ease-soft), opacity 200ms var(--ease-out);
+  pointer-events: none;
+}
+/* With motion reduced there is nothing to wipe, so it crossfades instead. */
+html[data-motion='reduced'] .row-link::after { transform: scaleX(1); opacity: 0; }
+html[data-motion='reduced'] .row-link:hover::after,
+html[data-motion='reduced'] .row-link:focus-visible::after { opacity: 1; }
+@media (prefers-reduced-motion: reduce) {
+  .row-link::after { transform: scaleX(1); opacity: 0; }
+  .row-link:hover::after,
+  .row-link:focus-visible::after { opacity: 1; }
+}
+
+.row-link:hover::after,
+.row-link:focus-visible::after { transform: scaleX(1); }
+
+@media (min-width: 48rem) {
+  .row-link {
+    grid-template-columns: 3.5rem minmax(0, 1.1fr) minmax(0, 1fr) 12.5rem;
+    gap: var(--s-5);
+  }
+}
+.row-link:hover,
+.row-link:focus-visible { color: var(--c-on-dark); }
+
+/* A small printed index. Decorative numbering only - the row's destination is
+   in its title and its button. */
+.row-index {
+  position: relative;
+  z-index: 2;
+  display: none;
+  font-family: var(--font-body);
+  font-size: var(--t-eyebrow);
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  color: var(--c-brand-mid);
+  transition: color var(--d-control) var(--ease-firm);
+}
+@media (min-width: 48rem) { .row-index { display: block; } }
+.row-link:hover .row-index,
+.row-link:focus-visible .row-index { color: var(--c-brand-light); }
+
+.row-title {
+  position: relative;
+  z-index: 2;
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 1.15rem + 2.6vw, 3.25rem);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.024em;
+  transition: color var(--d-control) var(--ease-firm),
+              transform 460ms var(--ease-soft);
+}
+.row-link:hover .row-title,
+.row-link:focus-visible .row-title {
+  color: var(--c-on-dark);
+  transform: translateX(calc(8px * var(--motion-scale)));
+}
+
+.row-text {
+  position: relative;
+  z-index: 2;
+  font-size: var(--t-small);
+  color: var(--fg-mute);
+  max-width: 34ch;
+  transition: color var(--d-control) var(--ease-firm);
+}
+.row-link:hover .row-text,
+.row-link:focus-visible .row-text { color: var(--c-on-dark-mute); }
+
+.row-go {
+  position: relative;
+  z-index: 2;
+  justify-self: end;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  min-height: 3rem;
+  padding: 0.65rem 1.35rem;
+  border: 2px solid var(--rule-brand);
+  border-radius: var(--r-pill);
+  font-size: var(--t-small);
+  font-weight: 500;
+  white-space: nowrap;
+  transition: background-color var(--d-control) var(--ease-firm),
+              border-color var(--d-control) var(--ease-firm),
+              color var(--d-control) var(--ease-firm);
+}
+.row-link:hover .row-go,
+.row-link:focus-visible .row-go {
+  background: var(--c-brand-light);
+  border-color: var(--c-brand-light);
+  color: var(--c-brand-deepest);
+}
+.row-link:hover .row-go .arrow { transform: translateX(calc(4px * var(--motion-scale))); }
+.row-go .arrow { transition: transform var(--d-control) var(--ease-firm); }
+
+/* ---- Pointer-following preview ------------------------------------------------ */
+/* Decorative only: behind the copy, cannot intercept clicks, bounded to the row,
+   and never the sole carrier of information. */
+.row-preview {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  width: 9rem;
+  height: 11rem;
+  border-radius: var(--r-md);
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0;
+  background: var(--ph, var(--c-shell));
+  /* A cream print border, so the photograph reads as a print laid on the row
+     rather than a hole cut in it - and so it stays legible once the row has
+     filled with the brand colour. */
+  border: 5px solid var(--c-cream);
+  box-shadow: var(--shadow-float);
+  /* --pr is the resting angle; --pv is a small extra tilt derived from how
+     fast the pointer is travelling, so the print leans into the movement. */
+  transform:
+    translate3d(var(--px, 0), var(--py, 0), 0)
+    rotate(calc(var(--pr, -3deg) + var(--pv, 0deg)))
+    scale(0.92);
+  transition: opacity 180ms var(--ease-out), transform 240ms var(--ease-out);
+  will-change: transform, opacity;
+}
+.row-preview img { width: 100%; height: 100%; object-fit: cover; }
+/* A deep brand-toned scrim over the print. The preview sits BEHIND the row's copy
+   by design, so without this the body text landed on a bright photograph and
+   became hard to read. The tint also makes the print read as part of the
+   brand fill it appears on rather than a cut-out pasted over it. */
+.row-preview::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(160deg,
+    color-mix(in srgb, var(--c-brand-deepest) 52%, transparent),
+    color-mix(in srgb, var(--c-brand) 62%, transparent));
+  pointer-events: none;
+}
+/* Belt and braces for the copy that can end up over it. */
+.row-link.is-previewing .row-text,
+.row-link.is-previewing .row-title {
+  text-shadow:
+    0 1px 3px var(--c-brand-deepest),
+    0 0 14px color-mix(in srgb, var(--c-brand-deepest) 85%, transparent);
+}
+.row-link.is-previewing .row-preview {
+  opacity: 1;
+  transform:
+    translate3d(var(--px, 0), var(--py, 0), 0)
+    rotate(calc(var(--pr, -3deg) + var(--pv, 0deg)))
+    scale(1);
+}
+
+/* Keyboard focus gets a stationary preview instead of a following one:
+   parked at the right-hand end of the row, with no pointer-following. */
+.row-link:focus-visible .row-preview {
+  opacity: 1;
+  left: auto;
+  right: 14rem;
+  top: 50%;
+  transform: translateY(-50%) rotate(-3deg) scale(1);
+  transition: opacity 180ms var(--ease-out);
+}
+@media (max-width: 47.99rem) {
+  .row-link:focus-visible .row-preview { display: none; }
+}
+
+/* Coarse pointers get a static thumbnail in the flow, not a floating one. */
+.row-thumb {
+  display: none;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: var(--r-sm);
+  overflow: hidden;
+  flex: none;
+  background: var(--ph, var(--c-shell));
+}
+.row-thumb img { width: 100%; height: 100%; object-fit: cover; }
+@media (hover: none) {
+  .row-preview { display: none; }
+  .row-thumb { display: block; }
+  /* The static thumbnail takes the index column's place on touch. */
+  .row-index { display: none; }
+  .row-link { grid-template-columns: auto minmax(0, 1fr); }
+  .row-link .row-text { grid-column: 1 / -1; }
+  .row-link .row-go { grid-column: 1 / -1; justify-self: start; }
+}
+@media (hover: none) and (min-width: 48rem) {
+  .row-link { grid-template-columns: auto minmax(0, 1.1fr) minmax(0, 1fr) 12.5rem; }
+  .row-link .row-text { grid-column: auto; }
+  .row-link .row-go { grid-column: auto; justify-self: auto; }
+}
+
+/* ==========================================================================
+   7. GALLERY
+   ========================================================================== */
+.gallery-head {
+  display: grid;
+  gap: var(--s-4);
+  margin-bottom: clamp(2rem, 1.2rem + 2.6vw, 3.25rem);
+}
+@media (min-width: 48rem) {
+  .gallery-head {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: end;
+    gap: var(--s-6);
+  }
+}
+.gallery-actions { display: flex; flex-wrap: wrap; gap: var(--s-3); align-items: center; }
+
+/* Mobile: an ordinary two-column gallery. Vertical scrolling stays native and
+   nothing here sets touch-action: none. */
+.collage {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(0.85rem, 0.5rem + 1.6vw, 1.75rem);
+}
+@media (min-width: 48rem) {
+  .collage { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+@media (min-width: 64rem) {
+  .collage { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+}
+
+/* Each photograph is presented as a physical print: a cream border, a soft
+   drop shadow and a resting tilt. On the deepest brand ground this is what
+   turns a tidy grid into a collage. */
+.print {
+  position: relative;
+  margin: 0;
+  border-radius: var(--r-sm);
+  overflow: hidden;
+  background: var(--ph, var(--c-shell));
+  border: 5px solid var(--c-cream);
+  box-shadow: var(--shadow-float);
+  aspect-ratio: 1;
+  /* Drag offset is a pure transform on top of the grid position, so the
+     layout stays deterministic at every breakpoint. */
+  transform:
+    translate3d(var(--dx, 0px), var(--dy, 0px), 0)
+    rotate(calc(var(--tilt, 0deg) * var(--motion-scale)));
+  transition: transform var(--d-select) var(--ease-soft),
+              box-shadow var(--d-select) var(--ease-out),
+              border-color var(--d-control) var(--ease-out);
+}
+@media (min-width: 48rem) { .print { border-width: 8px; } }
+.print button {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.print img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 640ms var(--ease-soft);
+}
+
+/* Lift and straighten on hover or keyboard focus: the print you are pointing
+   at comes forward and squares up. */
+@media (hover: hover) and (pointer: fine) {
+  .print:hover,
+  .print:focus-within {
+    z-index: 15;
+    border-color: var(--c-brand-light);
+    box-shadow: var(--shadow-float);
+    transform:
+      translate3d(var(--dx, 0px), calc(var(--dy, 0px) - 8px * var(--motion-scale)), 0)
+      rotate(calc(var(--tilt, 0deg) * 0.2 * var(--motion-scale)))
+      scale(calc(1 + 0.02 * var(--motion-scale)));
+  }
+  .print:hover img { transform: scale(calc(1 + 0.05 * var(--motion-scale))); }
+}
+
+@media (min-width: 48rem) and (max-width: 63.99rem) {
+  .collage { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (min-width: 64rem) {
+  /* The exact tiling described in data/media.mjs. */
+  .print {
+    grid-column: span var(--cols, 2);
+    aspect-ratio: var(--ar, 1);
+  }
+}
+
+/* Drag enhancement: mouse gets free movement, touch gets a sideways nudge.
+   pan-y keeps vertical swipes native (the page still scrolls); only
+   horizontal movement is left for the drag script to claim. */
+.collage.is-draggable .print { cursor: grab; touch-action: pan-y; }
+/* Stops a native image drag hijacking the gesture. */
+.collage.is-draggable .print img { user-select: none; -webkit-user-drag: none; }
+.collage.is-draggable .print.is-dragging {
+  cursor: grabbing;
+  z-index: 20;
+  border-color: var(--c-brand-light);
+  box-shadow: var(--shadow-float);
+  transition: none;
+}
+.print.is-settling { transition: transform 520ms var(--ease-soft); }
+
+.collage-hint {
+  font-size: var(--t-small);
+  color: var(--c-on-dark-mute);
+  display: none;
+  align-items: center;
+  gap: 0.5em;
+}
+.collage-hint .hint-mouse,
+.collage-hint .hint-touch { display: none; }
+@media (hover: hover) and (pointer: fine) and (min-width: 64rem) {
+  .collage-hint { display: flex; }
+  .collage-hint .hint-mouse { display: inline; }
+}
+@media (pointer: coarse) {
+  .collage-hint { display: flex; }
+  .collage-hint .hint-touch { display: inline; }
+}
+.collage-hint svg { width: 1.05rem; height: 1.05rem; color: var(--c-brand-light); flex: none; }
+
+/* ---- Lightbox ---------------------------------------------------------------- */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 140;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: var(--s-4);
+  padding: max(var(--s-4), env(safe-area-inset-top)) var(--pad-gutter)
+           max(var(--s-5), env(safe-area-inset-bottom));
+  background: color-mix(in srgb, var(--c-brand-deepest) 97%, transparent);
+  color: var(--c-on-dark);
+}
+.lightbox[hidden] { display: none !important; }
+
+.lightbox-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-4);
+}
+.lightbox-count {
+  font-size: var(--t-small);
+  font-weight: 500;
+  color: var(--c-on-dark-mute);
+}
+.lightbox .icon-btn {
+  background: transparent;
+  color: var(--c-on-dark);
+  border-color: color-mix(in srgb, var(--c-on-dark) 35%, transparent);
+}
+.lightbox .icon-btn:hover { background: var(--c-on-dark); color: var(--c-brand-deepest); }
+
+.lightbox-stage {
+  display: grid;
+  place-items: center;
+  min-height: 0;
+}
+.lightbox-stage img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: var(--r-md);
+}
+.lightbox-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-4);
+}
+.lightbox-caption {
+  font-size: var(--t-small);
+  color: var(--c-on-dark-mute);
+  max-width: 52ch;
+}
+.lightbox-nav { display: flex; gap: var(--s-3); flex: none; }
+
+/* ==========================================================================
+   7b. REVIEWS
+   --------------------------------------------------------------------------
+   The café's Google reviews as cards in one slow, endless row, each with the
+   reviewer's initial in a circle, their name, "Google review", the stars
+   they gave and the review as they wrote it. Flat ivory cards with a
+   hairline edge, not the tinted gradients such rows usually have; the stars
+   are deep sage, the palette's small accent, not Google's yellow.
+
+   The cards rest in a grid. scripts/reviews.js adds `.is-running` (full
+   motion, screen only), which lays them out in a row the width of the
+   screen and moves every copy of it left by its own width, so the loop has
+   no seam. Without JavaScript, under reduced motion and in print they stay
+   in the grid, and the pause button stays hidden.
+   ========================================================================== */
+.rv-head {
+  align-items: center;
+  text-align: center;
+}
+/* The eyebrow's sage rule on both sides, as the heading is centred. */
+.rv-head .eyebrow::after {
+  content: '';
+  width: 1.75rem;
+  height: 1px;
+  margin-left: -0.14em; /* the letter-spacing after the last letter */
+  background: var(--c-brand-mid);
+  flex: none;
+  transform-origin: right center;
+  transform: scaleX(var(--eyebrow-rule, 1));
+  transition: transform 520ms var(--ease-soft) 120ms;
+}
+
+.rv-marquee { --rv-gap: clamp(1rem, 0.75rem + 0.8vw, 1.5rem); }
+
+.rv-viewport {
+  max-width: var(--shell-max);
+  margin-inline: auto;
+  padding-inline: var(--pad-gutter);
+}
+.rv-set {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+  gap: var(--rv-gap);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.rv-set[data-rv-clone] { display: none; }
+
+.rv {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+  height: 100%;
+  margin: 0;
+  padding: clamp(1.25rem, 1.05rem + 0.6vw, 1.625rem);
+  background: var(--c-paper);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-md);
+}
+.rv-by {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+}
+/* The initial in Bodoni, like the café's monogram; the circles take sage,
+   near black and deeper blush in turn (AVATAR_TONES in build-html.mjs). */
+.rv-avatar {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  font-family: var(--font-display);
+  font-size: 1.375rem;
+  line-height: 1;
+  background: var(--c-brand-mid);
+  color: var(--c-paper);
+}
+.rv-avatar[data-tone='ink'] { background: var(--c-ink); }
+.rv-avatar[data-tone='blush'] { background: var(--c-brand-pale); color: var(--c-ink); }
+.rv-who {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+  min-width: 0;
+  line-height: 1.3;
+}
+.rv-name { font-weight: 500; }
+.rv-source { font-size: var(--t-small); color: var(--c-mute); }
+.rv-stars {
+  display: flex;
+  gap: 0.125rem;
+  margin: 0;
+  color: var(--c-brand-mid);
+}
+.rv-star {
+  width: 1.0625rem;
+  height: 1.0625rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.2;
+  stroke-linejoin: round;
+}
+.rv-star.is-on { fill: currentColor; }
+.rv blockquote,
+.rv blockquote p { margin: 0; }
+.rv blockquote p {
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.rv-controls {
+  display: flex;
+  justify-content: center;
+  margin-top: clamp(1.25rem, 1rem + 1vw, 2rem);
+}
+.rv-controls[hidden] { display: none; }
+.rv-toggle-icon { display: grid; place-items: center; }
+
+@keyframes rv-marquee {
+  to { transform: translateX(calc(-100% - var(--rv-gap))); }
+}
+@media screen {
+  .rv-marquee.is-running .rv-viewport {
+    max-width: none;
+    padding-inline: 0;
+    overflow: hidden;
+  }
+  .rv-marquee.is-running .rv-track {
+    display: flex;
+    width: max-content;
+    gap: var(--rv-gap);
+  }
+  .rv-marquee.is-running .rv-set {
+    display: flex;
+    flex: none;
+    gap: var(--rv-gap);
+    animation: rv-marquee var(--rv-duration, 60s) linear infinite;
+  }
+  /* Longer reviews get wider cards, so the row keeps an even height. */
+  .rv-marquee.is-running .rv-set > li {
+    flex: none;
+    width: min(clamp(18rem, calc(var(--rv-len, 0) * 0.07rem), 32rem), 86vw);
+  }
+  .rv-marquee.is-paused .rv-set,
+  .rv-marquee.is-idle .rv-set { animation-play-state: paused; }
+  @media (hover: hover) and (pointer: fine) {
+    .rv-marquee.is-running .rv-viewport:hover .rv-set { animation-play-state: paused; }
+  }
+  /* The row fades in and out at the sides of wider screens. */
+  @media (min-width: 40rem) {
+    .rv-marquee.is-running .rv-viewport {
+      --rv-fade: clamp(2rem, 7vw, 8rem);
+      -webkit-mask-image: linear-gradient(to right, transparent, #000 var(--rv-fade), #000 calc(100% - var(--rv-fade)), transparent);
+      mask-image: linear-gradient(to right, transparent, #000 var(--rv-fade), #000 calc(100% - var(--rv-fade)), transparent);
+    }
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .rv-set { animation: none !important; }
+}
+html[data-motion='reduced'] .rv-set { animation: none !important; }
+@media print {
+  .rv-controls { display: none !important; }
+}
+
+/* ==========================================================================
+   8. VISIT
+   ========================================================================== */
+.visit-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(2rem, 1.2rem + 3.4vw, 3.5rem);
+  align-items: start;
+}
+@media (min-width: 64rem) {
+  .visit-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); }
+}
+
+.visit-facts,
+.visit-list { display: grid; gap: var(--s-6); align-content: start; }
+
+.fact { display: grid; gap: var(--s-2); }
+.fact dt {
+  font-size: var(--t-eyebrow);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fg-mute);
+}
+.fact dd {
+  margin: 0;
+  font-size: var(--t-lead);
+  line-height: 1.4;
+}
+.fact dd a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+.fact address { font-style: normal; }
+
+.hours-list { display: grid; gap: var(--s-2); }
+.hours-list li {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s-3);
+  font-size: var(--t-body);
+}
+.hours-list .days { flex: none; }
+.hours-list .time { flex: none; font-weight: 500; font-variant-numeric: tabular-nums; }
+
+.visit-note {
+  font-size: var(--t-small);
+  color: var(--fg-mute);
+  padding: var(--s-4);
+  border-radius: var(--r-md);
+  background: color-mix(in srgb, var(--c-brand) 10%, transparent);
+  border-left: 3px solid var(--c-brand-mid);
+}
+
+.visit-actions { display: flex; flex-wrap: wrap; gap: var(--s-3); }
+
+.visit-media { display: grid; gap: var(--s-4); }
+.visit-photo { aspect-ratio: 3 / 2; }
+
+/* The hours list gets the brand-coloured leader, so the one piece of information
+   visitors scan for carries the brand colour. */
+.hours-list .leader { border-bottom-color: var(--rule-brand); }
+.hours-list .time { color: var(--c-brand); }
+
+/* Click-to-load map: nothing third-party loads until the visitor asks. */
+.map-slot {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  border-radius: var(--r-frame);
+  overflow: hidden;
+  background: var(--c-shell);
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: var(--s-5);
+  border: 1px solid var(--rule);
+}
+.map-slot iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.map-slot .map-invite { display: grid; gap: var(--s-3); justify-items: center; max-width: 30ch; }
+
+/* ---- The café's own cards ---------------------------------------------------
+   "opening hours" and "address" as the café posts them on Instagram: one
+   large word, upright over italic, rules under the rows of hours, and the
+   wordmark at the foot. Here they are ivory cards on the blush page with a
+   hairline edge, and the photograph and map sit beneath them.
+
+   As a card is revealed the italic is written in from the left and the rules
+   are drawn across. Both start states are multiplied by --motion-scale, so
+   with reduced motion the card simply fades in finished. */
+#visit > .shell > .eyebrow { margin: 0 0 clamp(1.25rem, 1rem + 1vw, 2rem); }
+
+.story-pair {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(1rem, 0.6rem + 1.6vw, 2rem);
+}
+@media (min-width: 48rem) {
+  .story-pair { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+.story {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--s-5);
+  padding: clamp(2.25rem, 1.4rem + 3.4vw, 4.5rem) clamp(1.25rem, 0.6rem + 3vw, 3.5rem) clamp(1.5rem, 1.1rem + 1.4vw, 2.5rem);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-frame);
+  background: var(--c-paper);
+  text-align: center;
+}
+
+.story-title {
+  margin: 0 0 var(--s-2);
+  font-size: clamp(3.25rem, 2.1rem + 5vw, 6.75rem);
+  font-weight: 400;
+  line-height: 0.86;
+  letter-spacing: -0.035em;
+}
+/* The italic tucks up under the upright word, a little to the right of it. */
+.story-title em {
+  display: block;
+  width: fit-content;
+  margin: -0.04em auto 0;
+  padding-left: 0.6em;
+}
+
+.story-rows {
+  width: 100%;
+  max-width: 30rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-align: left;
+}
+.story-rows li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-4);
+  padding: 1rem 0 0.9rem;
+  font-size: var(--t-lead);
+  background: linear-gradient(var(--rule-strong) 0 0) left bottom / 100% 1px no-repeat;
+}
+.story-rows .time { flex: none; font-variant-numeric: tabular-nums; }
+
+.story-address {
+  font-size: var(--t-lead);
+  font-style: normal;
+  line-height: 1.45;
+}
+.story-small {
+  max-width: 38ch;
+  margin: 0;
+  font-size: var(--t-small);
+  color: var(--c-mute);
+}
+.story .visit-actions { justify-content: center; }
+.story .logo-signoff {
+  width: clamp(6.5rem, 5.6rem + 3vw, 8.5rem);
+  margin-top: auto;
+  color: var(--c-ink);
+}
+
+.story-pair + .visit-media { margin-top: clamp(1rem, 0.6rem + 1.6vw, 2rem); }
+@media (min-width: 48rem) {
+  .story-pair + .visit-media {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(1rem, 0.6rem + 1.6vw, 2rem);
+  }
+  .story-pair + .visit-media .map-slot { aspect-ratio: 3 / 2; }
+}
+
+/* Revealing a card: the italic written in, then the rules drawn across. */
+.story[data-reveal-ready] .story-title em {
+  clip-path: inset(-0.3em calc(100% * var(--motion-scale) - 0.3em) -0.3em -0.3em);
+  transition: clip-path 1100ms var(--ease-soft) 260ms;
+}
+.story[data-reveal-ready] .story-rows li {
+  background-size: calc(100% - 100% * var(--motion-scale)) 1px;
+  transition: background-size 900ms var(--ease-soft) 520ms;
+}
+.story[data-reveal-ready] .story-rows li + li { transition-delay: 680ms; }
+.story[data-reveal-ready].is-revealed .story-title em { clip-path: inset(-0.3em); }
+.story[data-reveal-ready].is-revealed .story-rows li { background-size: 100% 1px; }
+
+/* ==========================================================================
+   9. FOOTER
+   ========================================================================== */
+.site-footer {
+  background: var(--c-brand-deepest);
+  color: var(--c-on-dark);
+  padding-top: var(--pad-section);
+  position: relative;
+  overflow: clip;
+}
+
+.footer-grid {
+  display: grid;
+  gap: var(--s-7);
+  padding-bottom: var(--s-8);
+}
+@media (min-width: 48rem) {
+  .footer-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s-6); }
+}
+
+.footer-col h2 {
+  font-family: var(--font-body);
+  font-size: var(--t-eyebrow);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--c-on-dark-mute);
+  margin-bottom: var(--s-4);
+}
+.footer-col ul { display: grid; gap: var(--s-1); }
+.footer-col a {
+  color: var(--c-on-dark);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+}
+.footer-col a:hover { color: var(--c-brand-light); text-decoration: underline; }
+.footer-col address { font-style: normal; color: var(--c-on-dark-mute); line-height: 1.7; }
+/* Phones: the Explore links run in two columns, so the footer is not a long
+   single-file list. */
+@media (max-width: 47.99rem) {
+  .footer-col .footer-explore { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--s-4); }
+}
+
+.footer-bar {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-4);
+  padding-block: var(--s-5);
+  font-size: var(--t-small);
+  color: var(--c-on-dark-mute);
+}
+
+/* The full logo, monogram over wordmark, in blush on near black: the
+   guidelines' "full logo in the header or footer", with generous clear space.
+   Decorative, since the name is in the header and the footer text. */
+.footer-logo {
+  display: flex;
+  justify-content: center;
+  padding-block: var(--s-7) var(--s-6);
+  border-top: 1px solid color-mix(in srgb, var(--c-on-dark) 14%, transparent);
+  color: var(--c-brand-light);
+}
+.footer-logo .logo { width: clamp(9rem, 7rem + 8vw, 14rem); }
+
+.to-top {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  min-height: 2.75rem;
+  padding: 0.5rem 1.1rem;
+  border: 2px solid color-mix(in srgb, var(--c-on-dark) 32%, transparent);
+  border-radius: var(--r-pill);
+  color: var(--c-on-dark);
+  font-weight: 500;
+  font-size: var(--t-small);
+  text-decoration: none;
+}
+.to-top:hover { background: var(--c-on-dark); color: var(--c-brand-deepest); }

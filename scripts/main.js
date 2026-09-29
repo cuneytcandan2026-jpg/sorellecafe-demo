@@ -1,0 +1,80 @@
+/**
+ * Homepage entry point.
+ *
+ * Every init function returns its own teardown. They are collected here so the
+ * page can be torn down cleanly, and so a failure in one enhancement can never
+ * take the rest of the page with it.
+ */
+import { initReveals } from './motion.js';
+import { initMenuPanel, initDock, initHeader, initHours } from './nav.js';
+import { initShowcase } from './showcase.js';
+import { initMenuCard } from './menu-card.js';
+import { initAtmosphere } from './atmosphere.js';
+import { initRowPreviews } from './editorial.js';
+import { initLightbox, initCollageDrag } from './gallery.js';
+import { initReviews } from './reviews.js';
+import { initMap } from './visit.js';
+import { initContact } from './contact.js';
+
+const teardowns = [];
+
+/** Runs one enhancement in isolation; a thrown error is logged, not fatal. */
+function mount(name, fn) {
+  try {
+    const off = fn();
+    if (typeof off === 'function') teardowns.push(off);
+  } catch (error) {
+    console.error(`[site] "${name}" failed to start`, error);
+  }
+}
+
+/* ==========================================================================
+   Hero intro
+   --------------------------------------------------------------------------
+   `data-hero-ready` is what activates the hiding styles, and it is only ever
+   set here. If this script does not run, the hero renders fully visible.
+   ========================================================================== */
+function initHero() {
+  const hero = document.querySelector('.hero');
+  if (!hero) return () => {};
+
+  hero.dataset.heroReady = '';
+  // Two frames: one to let the attribute apply the start state, one to release.
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => hero.classList.add('is-in'));
+  });
+
+  // Safety net: if anything stalls, the hero is shown regardless.
+  const failsafe = setTimeout(() => hero.classList.add('is-in'), 1200);
+  return () => clearTimeout(failsafe);
+}
+
+/* ==========================================================================
+   Boot
+   ========================================================================== */
+mount('hero', initHero);
+mount('reveals', () => initReveals());
+mount('header', initHeader);
+mount('hours', initHours);
+mount('menu panel', initMenuPanel);
+mount('dock', initDock);
+mount('showcase', initShowcase);
+mount('menu card', initMenuCard);
+mount('atmosphere', initAtmosphere);
+mount('row previews', initRowPreviews);
+mount('lightbox', initLightbox);
+mount('collage drag', initCollageDrag);
+mount('reviews', initReviews);
+mount('map', initMap);
+mount('contact', initContact);
+
+// Clean teardown on navigation away, so nothing is left running in bfcache.
+window.addEventListener('pagehide', () => {
+  while (teardowns.length) {
+    try {
+      teardowns.pop()();
+    } catch {
+      /* teardown is best-effort */
+    }
+  }
+});

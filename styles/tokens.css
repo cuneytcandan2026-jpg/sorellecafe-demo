@@ -1,0 +1,214 @@
+/* ==========================================================================
+   Design tokens
+   --------------------------------------------------------------------------
+   The Sorelle Café palette, from the brand guidelines (Assets/Brand):
+
+     warm blush   #F4E7DF   page ground                   --c-cream
+     soft ivory   #FFF9F5   cards, the alternating band   --c-paper
+     near black   #181512   type, buttons, dark grounds   --c-ink, --c-brand
+     charcoal     #514741   secondary copy, hover         --c-mute, --c-brand-hover
+     muted taupe  #B9AAA2   secondary copy on dark        --c-on-dark-mute
+                            (as a hairline it is --rule, a tint of near black
+                            that lands on taupe over blush)
+     deep sage    #416452   links, dietary labels, small  --c-brand-mid, --c-warm
+                            botanical details
+
+   The shades in between (the dark-ground steps, the deeper blush of a
+   recessed surface, the deeper sage used for hover) are derived from these.
+   The menu's pale green is too faint for text on blush, as the guidelines
+   say, so it appears only on dark grounds (--c-glow).
+
+   The names are roles, not colours: the design system was built on a
+   different palette, and swapping it was a change of values here. Near black
+   is both the primary type and the primary action colour, so links cannot be
+   told apart from copy by colour; they take deep sage, and an underline.
+
+   Two channel tokens carry the tinted shadows and veils, because a colour
+   used at many opacities has to be written as rgb(channels / alpha):
+     --shade-rgb    near black: hero veil, glass, text shadows
+     --warmth-rgb   a thin warm layer over photographs
+
+   Every foreground/background pairing used below is asserted in
+   tools/contrast.mjs, which reads the values from this file. Run
+   `npm run contrast` after any colour change.
+   ========================================================================== */
+
+:root {
+  /* ---- Brand ramp ------------------------------------------------------- */
+  --c-brand-deepest: #181512;  /* near black: hero, gallery, footer, nav panel */
+  --c-brand-dark: #221d19;     /* dark section ground */
+  --c-brand-raised: #2f2823;   /* raised surface on a dark ground */
+  --c-brand: #181512;          /* PRIMARY: buttons, active states (near black) */
+  --c-brand-hover: #514741;    /* primary hover (charcoal) */
+  --c-brand-mid: #416452;      /* deep sage: links, rules, indicators */
+  --c-brand-light: #f4e7df;    /* blush ON dark: links, active chips, buttons */
+  --c-brand-bright: #fff9f5;   /* hero accent: the CTA icon and its hover fill.
+                                  Only ever carries --c-brand-deepest type. */
+  --c-brand-pale: #e9d8cd;     /* deeper blush: quiet surfaces, hover on dark */
+
+  /* ---- Neutrals - the counterweight ------------------------------------- */
+  --c-cream: #f4e7df;          /* page ground (warm blush) */
+  --c-shell: #ecdcd2;          /* recessed surface: wells, photo placeholders */
+  --c-paper: #fff9f5;          /* cards, menu sheets, the alternating band (ivory) */
+
+  /* ---- Ink and secondary type ------------------------------------------- */
+  --c-ink: #181512;            /* primary type (near black) */
+  --c-mute: #514741;           /* secondary copy on light (charcoal) */
+  --c-mute-warm: #5a4a40;      /* warm secondary copy */
+  --c-on-dark: #fff9f5;        /* copy on dark grounds (ivory) */
+  --c-on-dark-mute: #b9aaa2;   /* secondary copy on dark grounds (taupe) */
+
+  /* ---- Accents - used sparingly ----------------------------------------- */
+  --c-warm: #416452;           /* second accent (deep sage): marks food, e.g. dietary labels */
+  --c-warm-deep: #33503f;      /* the second accent as small text and hover */
+  --c-glow: #b9d0bd;           /* the menu's pale green: small highlights on dark only */
+  --c-mark: #823e4c;           /* the "to confirm" marker */
+  --c-support: #514741;        /* quiet supporting colour */
+
+  /* ---- Channels for tinted shadows and veils ---------------------------- */
+  --shade-rgb: 24 21 18;
+  --warmth-rgb: 104 68 48;
+
+  /* ---- Decorative motif --------------------------------------------------
+     A tiled SVG drawn behind .motif sections (light lines on dark grounds)
+     and .motif-dark sections (dark lines on light grounds), at low opacity.
+
+     Sorelle's is marble: fine ivory veins, after the dark veined marble its
+     plates sit on in the photographs. It is written by
+     `node tools/build-motif.mjs`, which replaces the line below; edit that
+     script, not this value. It appears on the dark grounds only (the café,
+     the gallery, the footer): the light grounds stay plain, as the
+     guidelines want blush and ivory to breathe, so --motif-image-dark stays
+     none. The botanical mark is not used as a pattern: the guidelines ask
+     for it to be echoed subtly, not scattered across every section. */
+  --motif-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1440' height='720'%3E%3Cdefs%3E%3Cg id='v' fill='none' stroke='%23fff9f5' stroke-linecap='round'%3E%3Cpath d='M0 122C6 126 24 140 36 146C48 153 60 156 72 160C84 164 96 166 108 170C120 174 132 178 144 184C156 190 168 198 180 206C192 213 204 221 216 228C228 235 240 240 252 246C264 252 276 256 288 263C300 270 312 277 324 286C336 295 348 306 360 315C372 324 384 333 396 340C408 347 420 351 432 355C444 359 456 360 468 363C480 366 492 369 504 372C516 376 528 380 540 384C552 387 564 391 576 392C588 394 600 393 612 394C624 394 636 392 648 394C660 395 672 397 684 402C696 406 708 413 720 419C732 426 744 434 756 440C768 446 780 451 792 456C804 461 816 465 828 471C840 477 852 484 864 491C876 499 888 509 900 516C912 524 924 532 936 538C948 544 960 547 972 550C984 554 996 555 1008 558C1020 561 1032 564 1044 569C1056 574 1068 581 1080 587C1092 593 1104 600 1116 606C1128 611 1140 616 1152 621C1164 626 1176 630 1188 638C1200 645 1212 653 1224 663C1236 673 1248 686 1260 698C1272 710 1284 723 1296 734C1308 744 1320 754 1332 763C1344 771 1356 778 1368 787C1380 796 1392 804 1404 814C1416 823 1434 838 1440 842' stroke-width='1.2' stroke-opacity='1'/%3E%3Cpath d='M0 137C6 141 24 155 36 161C48 167 60 171 72 174C84 177 96 178 108 181C120 184 132 187 144 192C156 197 168 204 180 210C192 216 204 224 216 230C228 236 240 241 252 247C264 253 276 257 288 264C300 271 312 280 324 289C336 299 348 311 360 321C372 331 384 342 396 349C408 357 420 363 432 367C444 372 456 374 468 377C480 381 492 384 504 387C516 391 528 395 540 398C552 401 564 403 576 404C588 405 600 403 612 402C624 402 636 399 648 399C660 400 672 401 684 405C696 408 708 415 720 421C732 427 744 434 756 441C768 447 780 452 792 458C804 464 816 469 828 476C840 483 852 491 864 500C876 508 888 519 900 528C912 537 924 546 936 552C948 558 960 562 972 565C984 569 996 569 1008 572C1020 575 1032 578 1044 582C1056 586 1068 592 1080 597C1092 602 1104 608 1116 612C1128 617 1140 620 1152 625C1164 629 1176 633 1188 639C1200 646 1212 654 1224 664C1236 674 1248 688 1260 700C1272 712 1284 726 1296 738C1308 749 1320 760 1332 770C1344 780 1356 788 1368 797C1380 807 1392 817 1404 827C1416 837 1434 852 1440 857' stroke-width='0.3' stroke-opacity='0.5'/%3E%3Cpath d='M0 123C2 124 9 126 13 128C18 130 22 131 27 133C31 135 36 136 40 138C45 140 49 141 54 143C58 145 63 146 67 148C72 149 77 150 81 151C86 151 93 152 96 152' stroke-width='0.7' stroke-opacity='0.6'/%3E%3Cpath d='M548 386C551 389 560 398 566 403C573 409 581 413 587 418C594 423 600 429 606 435C613 440 619 446 625 452C631 458 637 464 643 470C648 476 654 483 661 488C667 494 677 501 681 504' stroke-width='0.5' stroke-opacity='0.8'/%3E%3Cpath d='M17 135C23 133 40 130 52 127C64 124 75 120 87 118C99 116 111 116 123 115C136 114 148 115 160 113C172 111 183 106 195 104C206 101 218 97 230 96C242 95 260 97 267 97' stroke-width='0.5' stroke-opacity='0.9'/%3E%3Cpath d='M27 141C30 148 39 168 47 180C55 193 66 203 73 216C81 228 89 241 94 255C99 268 103 283 106 297C109 311 112 326 112 341C113 355 110 370 108 384C105 399 99 420 97 427' stroke-width='0.6' stroke-opacity='0.6'/%3E%3Cpath d='M886 507C893 506 913 501 926 499C939 498 953 501 966 500C979 498 992 493 1005 490C1018 487 1031 484 1045 483C1058 483 1071 485 1085 486C1098 487 1112 488 1125 489C1138 491 1158 495 1164 497' stroke-width='0.6' stroke-opacity='0.8'/%3E%3Cpath d='M625 393C627 397 636 407 642 414C647 421 653 428 659 435C665 441 671 448 678 453C686 458 693 463 702 466C710 470 719 471 727 474C736 477 743 483 751 486C760 489 773 492 777 493' stroke-width='0.5' stroke-opacity='0.7'/%3E%3Cpath d='M0 235C6 236 24 240 36 243C48 245 60 247 72 249C84 252 96 255 108 258C120 260 132 262 144 263C156 264 168 263 180 263C192 263 204 262 216 265C228 268 240 273 252 279C264 285 276 294 288 302C300 309 312 316 324 322C336 328 348 333 360 339C372 345 384 351 396 358C408 365 420 374 432 381C444 387 456 393 468 398C480 402 492 404 504 407C516 411 528 413 540 419C552 424 564 432 576 441C588 449 600 461 612 471C624 480 636 490 648 499C660 509 672 517 684 528C696 538 708 549 720 561C732 572 744 586 756 597C768 607 780 617 792 625C804 633 816 637 828 643C840 649 852 653 864 659C876 665 888 674 900 682C912 690 924 699 936 708C948 716 960 723 972 731C984 738 996 745 1008 754C1020 763 1032 773 1044 783C1056 794 1068 807 1080 816C1092 826 1104 835 1116 841C1128 847 1140 850 1152 854C1164 857 1176 859 1188 863C1200 866 1212 871 1224 875C1236 879 1248 883 1260 886C1272 889 1284 890 1296 892C1308 894 1320 895 1332 899C1344 903 1356 909 1368 916C1380 922 1392 932 1404 938C1416 945 1434 952 1440 955' stroke-width='0.7' stroke-opacity='0.7'/%3E%3Cpath d='M0 250C6 251 24 255 36 258C48 260 60 261 72 263C84 264 96 267 108 269C120 270 132 271 144 271C156 271 168 268 180 267C192 267 204 265 216 267C228 269 240 274 252 280C264 286 276 296 288 303C300 311 312 318 324 326C336 333 348 338 360 345C372 352 384 360 396 368C408 376 420 385 432 393C444 400 456 407 468 412C480 417 492 419 504 422C516 426 528 428 540 433C552 438 564 445 576 453C588 460 600 471 612 479C624 488 636 496 648 505C660 513 672 521 684 530C696 540 708 551 720 562C732 573 744 587 756 598C768 609 780 619 792 628C804 636 816 641 828 648C840 655 852 660 864 667C876 675 888 684 900 693C912 702 924 713 936 721C948 730 960 738 972 746C984 753 996 760 1008 768C1020 777 1032 787 1044 796C1056 806 1068 818 1080 826C1092 835 1104 842 1116 848C1128 853 1140 855 1152 857C1164 860 1176 861 1188 864C1200 868 1212 872 1224 876C1236 880 1248 884 1260 888C1272 891 1284 893 1296 896C1308 899 1320 901 1332 906C1344 912 1356 919 1368 926C1380 934 1392 944 1404 951C1416 959 1434 967 1440 970' stroke-width='0.3' stroke-opacity='0.3'/%3E%3Cpath d='M542 420C547 419 559 418 568 418C576 418 584 417 593 417C601 417 610 416 618 417C627 418 635 421 643 422C651 423 660 421 668 422C677 423 685 425 693 428C701 431 712 438 715 440' stroke-width='0.4' stroke-opacity='0.5'/%3E%3Cpath d='M532 415C535 419 545 430 551 438C558 445 564 453 570 460C577 467 586 473 592 480C598 487 603 496 608 504C614 513 620 521 624 529C628 538 630 548 634 557C638 566 646 578 649 582' stroke-width='0.3' stroke-opacity='0.6'/%3E%3Cpath d='M995 745C999 745 1011 746 1020 747C1028 748 1036 749 1044 749C1053 750 1061 751 1069 751C1077 752 1086 752 1094 750C1102 749 1110 746 1118 744C1126 743 1134 742 1143 742C1151 742 1163 744 1167 744' stroke-width='0.3' stroke-opacity='0.5'/%3E%3Cpath d='M490 404C492 405 497 409 501 410C505 412 510 412 514 414C518 415 522 416 526 417C530 418 535 418 539 420C543 421 547 423 551 424C555 425 559 426 563 427C568 428 574 430 576 431' stroke-width='0.5' stroke-opacity='0.5'/%3E%3Cpath d='M0 532C6 534 24 541 36 545C48 549 60 553 72 557C84 561 96 566 108 571C120 576 132 582 144 588C156 594 168 600 180 606C192 612 204 617 216 621C228 625 240 629 252 631C264 633 276 634 288 636C300 637 312 637 324 638C336 640 348 641 360 645C372 648 384 653 396 659C408 665 420 673 432 681C444 690 456 700 468 710C480 719 492 730 504 739C516 749 528 758 540 766C552 774 564 781 576 788C588 796 600 802 612 808C624 815 636 822 648 829C660 837 672 845 684 854C696 862 708 872 720 882C732 891 744 901 756 910C768 919 780 927 792 934C804 941 816 946 828 950C840 954 852 957 864 958C876 960 888 960 900 961C912 962 924 962 936 964C948 966 960 968 972 972C984 975 996 980 1008 985C1020 990 1032 997 1044 1003C1056 1009 1068 1016 1080 1022C1092 1028 1104 1033 1116 1038C1128 1043 1140 1047 1152 1052C1164 1056 1176 1060 1188 1065C1200 1070 1212 1075 1224 1082C1236 1089 1248 1097 1260 1107C1272 1116 1284 1127 1296 1138C1308 1149 1320 1162 1332 1173C1344 1184 1356 1196 1368 1206C1380 1216 1392 1225 1404 1233C1416 1241 1434 1249 1440 1252' stroke-width='0.5' stroke-opacity='0.4'/%3E%3Cpath d='M0 547C6 549 24 556 36 560C48 564 60 567 72 571C84 574 96 578 108 582C120 586 132 591 144 596C156 601 168 606 180 611C192 615 204 620 216 623C228 627 240 630 252 632C264 634 276 635 288 637C300 639 312 639 324 642C336 644 348 646 360 651C372 655 384 661 396 668C408 675 420 684 432 694C444 703 456 714 468 724C480 734 492 745 504 754C516 764 528 773 540 780C552 788 564 794 576 800C588 806 600 811 612 817C624 823 636 828 648 835C660 841 672 848 684 856C696 864 708 874 720 883C732 892 744 902 756 911C768 920 780 929 792 937C804 944 816 951 828 956C840 961 852 964 864 967C876 970 888 971 900 973C912 975 924 976 936 978C948 980 960 983 972 987C984 990 996 995 1008 1000C1020 1005 1032 1011 1044 1016C1056 1021 1068 1027 1080 1032C1092 1036 1104 1041 1116 1045C1128 1049 1140 1052 1152 1055C1164 1059 1176 1062 1188 1066C1200 1071 1212 1076 1224 1083C1236 1090 1248 1099 1260 1109C1272 1118 1284 1130 1296 1142C1308 1154 1320 1168 1332 1180C1344 1193 1356 1206 1368 1217C1380 1228 1392 1238 1404 1246C1416 1254 1434 1263 1440 1267' stroke-width='0.3' stroke-opacity='0.2'/%3E%3Cpath d='M1090 1027C1095 1025 1109 1022 1118 1019C1127 1015 1136 1011 1145 1007C1154 1003 1162 999 1172 996C1181 992 1190 990 1199 986C1208 983 1217 980 1226 976C1235 972 1244 967 1252 963C1261 959 1274 952 1278 950' stroke-width='0.3' stroke-opacity='0.2'/%3E%3Cpath d='M907 962C911 964 926 970 935 975C944 980 952 986 961 992C970 997 979 1003 988 1007C998 1011 1008 1013 1018 1017C1028 1020 1038 1024 1048 1028C1057 1031 1067 1034 1077 1037C1088 1039 1103 1040 1108 1041' stroke-width='0.3' stroke-opacity='0.3'/%3E%3Cpath d='M567 783C574 783 594 783 607 782C621 781 634 779 647 776C660 773 673 770 686 765C699 761 711 755 723 750C735 744 746 736 758 730C771 725 784 722 797 719C810 716 830 713 837 712' stroke-width='0.3' stroke-opacity='0.3'/%3E%3C/g%3E%3C/defs%3E%3Cuse href='%23v' x='-1440' y='-720'/%3E%3Cuse href='%23v' x='-1440' y='0'/%3E%3Cuse href='%23v' x='-1440' y='720'/%3E%3Cuse href='%23v' x='0' y='-720'/%3E%3Cuse href='%23v' x='0' y='0'/%3E%3Cuse href='%23v' x='0' y='720'/%3E%3Cuse href='%23v' x='1440' y='-720'/%3E%3Cuse href='%23v' x='1440' y='0'/%3E%3Cuse href='%23v' x='1440' y='720'/%3E%3C/svg%3E");
+  --motif-image-dark: none;
+  --motif-size: 90rem 45rem;
+
+  /* ---- Semantic roles ---------------------------------------------------- */
+  --bg-page: var(--c-cream);
+  --bg-band: var(--c-paper);   /* sections alternate blush and ivory */
+  --bg-dark: var(--c-brand-dark);
+  --bg-deep: var(--c-brand-deepest);
+  --fg: var(--c-ink);
+  --fg-mute: var(--c-mute);
+
+  /* Primary action colour: near black on light grounds. */
+  --accent: var(--c-brand);
+  --accent-hover: var(--c-brand-hover);
+  /* Links and accent text: deep sage, per the guidelines. */
+  --accent-text: var(--c-brand-mid);
+  --accent-on-dark: var(--c-brand-light);
+  /* The second accent marks food, never navigation. */
+  --accent-warm: var(--c-warm);
+  --accent-warm-text: var(--c-warm-deep);
+
+  /* Hairlines are thin and taupe (a tint of near black that lands on the
+     brand taupe over blush). --rule-strong is the edge of a control - a form
+     field, a toggle - and has to reach 3:1 against its ground, so it is a
+     stronger tint; tools/contrast.mjs checks it. */
+  --rule: color-mix(in srgb, var(--c-ink) 26%, transparent);
+  --rule-strong: color-mix(in srgb, var(--c-ink) 52%, transparent);
+  --rule-brand: color-mix(in srgb, var(--c-brand) 30%, transparent);
+  --focus: var(--c-brand);
+  --focus-on-dark: var(--c-brand-light);
+
+  /* Tinted washes, for surfaces that should carry the brand without going dark. */
+  --wash-brand: color-mix(in srgb, var(--c-brand) 5%, var(--c-cream));
+  --wash-brand-strong: color-mix(in srgb, var(--c-brand) 10%, var(--c-cream));
+
+  /* ---- Type ------------------------------------------------------------- */
+  /* Bodoni Moda for display and headings, DM Sans for everything else
+     (brand guidelines). Both self-hosted; see base.css. */
+  --font-display: 'Bodoni Moda', 'Bodoni 72', Didot, 'Iowan Old Style',
+    Georgia, serif;
+  --font-body: 'DM Sans', 'Segoe UI', system-ui, -apple-system, 'Helvetica Neue',
+    Arial, sans-serif;
+
+  /* 44px at 320w -> 112px at 1440w (brief: 44-68 mobile, 80-132 desktop) */
+  --t-hero: clamp(2.75rem, 1.55rem + 5.6vw, 5.75rem);
+  --t-h2: clamp(2rem, 1.25rem + 3.2vw, 4.25rem);
+  --t-h3: clamp(1.375rem, 1.1rem + 1.1vw, 2rem);
+  --t-h4: clamp(1.125rem, 1.02rem + 0.42vw, 1.375rem);
+  --t-body: clamp(1rem, 0.955rem + 0.22vw, 1.125rem);
+  --t-lead: clamp(1.125rem, 1.02rem + 0.5vw, 1.375rem);
+  --t-small: clamp(0.875rem, 0.85rem + 0.11vw, 0.9375rem);
+  --t-eyebrow: clamp(0.6875rem, 0.66rem + 0.14vw, 0.8125rem);
+
+  --lh-tight: 1.02;
+  --lh-snug: 1.15;
+  --lh-body: 1.6;
+  --measure: 62ch;
+  --measure-tight: 46ch;
+
+  /* ---- Space ------------------------------------------------------------ */
+  --s-1: 0.25rem;
+  --s-2: 0.5rem;
+  --s-3: 0.75rem;
+  --s-4: 1rem;
+  --s-5: 1.5rem;
+  --s-6: 2rem;
+  --s-7: 3rem;
+  --s-8: 4rem;
+  --s-9: 6rem;
+
+  /* 40px mobile -> 112px desktop section rhythm */
+  --pad-section: clamp(2.5rem, 1.5rem + 5vw, 7rem);
+  --pad-gutter: clamp(1.25rem, 0.9rem + 1.8vw, 3rem);
+  --shell-max: 84rem;
+  --prose-max: 46rem;
+
+  /* ---- Shape ------------------------------------------------------------ */
+  /* Restrained and editorial: photographs and cards take a barely rounded
+     corner. Buttons and chips stay pills, the one soft shape. */
+  --r-sm: 0.25rem;
+  --r-md: 0.375rem;
+  --r-frame: 0.1875rem;
+  --r-lg: 0.25rem;
+  --r-pill: 999px;
+
+  /* The guidelines ask for thin lines and no heavy shadows. Photographs sit
+     flat on the ground. What is left is a short, soft shadow for hover and
+     for things that genuinely float over the page (the dock, pop-ups). */
+  --shadow-print: none;
+  --shadow-lift: 0 14px 26px -20px rgb(var(--shade-rgb) / 0.42);
+  --shadow-float:
+    0 1px 2px rgb(var(--shade-rgb) / 0.06),
+    0 18px 36px -24px rgb(var(--shade-rgb) / 0.4);
+
+  /* ---- Motion ----------------------------------------------------------- */
+  /* One ease for entrances, one firmer ease for controls, one spring kept
+     for the single small decorative element that is allowed to bounce. */
+  --ease-out: cubic-bezier(0.16, 0.84, 0.44, 1);
+  --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-firm: cubic-bezier(0.32, 0.72, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.42, 0.64, 1);
+
+  --d-control: 200ms;   /* buttons, chips */
+  --d-swap: 280ms;      /* photo crossfades */
+  --d-select: 340ms;    /* photo-stack selection */
+  --d-panel: 300ms;     /* menu panel */
+  --d-reveal: 620ms;    /* section entrance */
+  --d-hero-text: 760ms;
+  --d-hero-image: 980ms;
+
+  --stagger: 82ms;
+
+  /* Scaled to 0 by the reduced-motion layer in motion.css, so a single
+     multiplier disables translation without deleting the transitions. */
+  --motion-scale: 1;
+
+  /* Tall enough to hold the full stacked logo (.wordmark .logo-full in
+     components.css) with the clear space the guidelines ask for above and
+     below it. Everything that sits under the header - the hero's negative
+     margin, scroll-padding, the menu page's sticky bar - reads this token, so
+     the logo's size and this value have to move together. */
+  --header-h: 5.5rem;
+}
+
+@media (min-width: 60rem) {
+  :root {
+    --header-h: 6rem;
+  }
+}
+
