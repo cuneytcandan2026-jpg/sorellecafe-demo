@@ -263,10 +263,23 @@ html.is-header-tucked:has(body.is-menu-page) {
   list-style: none;
   overflow-x: auto;
   scrollbar-width: none;
+}
+.m-bar-courses ul::-webkit-scrollbar { display: none; }
+/* Where the tabs do not all fit, the row scrolls, and an edge fades on the side
+   there is more to see (menu-page.js sets data-fade). A fade on a row that
+   fits would only dim the last tab. */
+.m-bar-courses ul[data-fade='end'] {
   -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 2rem), transparent);
   mask-image: linear-gradient(90deg, #000 calc(100% - 2rem), transparent);
 }
-.m-bar-courses ul::-webkit-scrollbar { display: none; }
+.m-bar-courses ul[data-fade='start'] {
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 2rem);
+  mask-image: linear-gradient(90deg, transparent, #000 2rem);
+}
+.m-bar-courses ul[data-fade='both'] {
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 2rem, #000 calc(100% - 2rem), transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 2rem, #000 calc(100% - 2rem), transparent);
+}
 /* With the tools beside it, the list must stop at its own edge: bleeding to
    the screen edge would slide course chips underneath the search button. */
 .m-bar-inner:has(.m-tools:not([hidden])) .m-bar-courses ul {
@@ -363,8 +376,12 @@ html.is-header-tucked:has(body.is-menu-page) {
   .m-bar.is-searching .m-bar-courses { display: none; }
   .m-bar.is-searching .m-tools { flex: 1; }
 }
-/* Phones: the (V) toggle drops its visible word so the course chips get the
-   room. "only" stays in the accessible name. */
+/* Phones: the four course tabs and two 44px buttons need about 380px, more
+   than a phone has, and "Drinks" started off the screen. So the tabs share the
+   whole row with the search button, and the (V) toggle waits beside the
+   search field, which the search button opens. Once pressed it stays in the
+   bar, so a filtered menu always shows why. Its word "only" is dropped, and
+   stays in the accessible name. */
 @media (max-width: 39.99rem) {
   .m-veg-label {
     position: absolute;
@@ -375,7 +392,16 @@ html.is-header-tucked:has(body.is-menu-page) {
     white-space: nowrap;
   }
   .m-veg { position: relative; padding-inline: 0; }
-  .m-bar-courses a { padding-inline: 0.75rem; }
+  .m-bar:not(.is-searching) .m-veg[aria-pressed='false'] { display: none; }
+  .m-bar-inner { gap: var(--s-2); }
+  .m-bar-courses ul { flex: 1; max-width: 22rem; gap: 2px; }
+  .m-bar-inner:has(.m-tools:not([hidden])) .m-bar-courses ul { padding-right: 0; }
+  .m-bar-courses li { flex: 1 0 auto; }
+  .m-bar-courses a {
+    justify-content: center;
+    width: 100%;
+    padding-inline: 0.5rem;
+  }
 }
 @media (min-width: 64rem) {
   .m-search-toggle { display: none; }

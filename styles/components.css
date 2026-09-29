@@ -301,8 +301,6 @@ body[data-header-mode='over'] .hero {
 .menu-toggle[aria-expanded='true'] .bars i:nth-child(3) {
   transform: translateY(-6px) rotate(-45deg);
 }
-/* Only the homepage has the desktop dock; everywhere else the toggle stays. */
-@media (min-width: 64rem) { .menu-toggle:not(.menu-toggle-desktop) { display: none; } }
 
 .nav-panel {
   position: fixed;

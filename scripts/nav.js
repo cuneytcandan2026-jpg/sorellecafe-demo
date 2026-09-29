@@ -193,18 +193,10 @@ export function initMenuPanel() {
   const onPanelClick = (event) => {
     if (event.target.closest('a')) setOpen(false);
   };
-  // A resize into desktop width must not leave the body scroll-locked, unless
-  // this page keeps its toggle on desktop (no dock), where the panel still works.
-  const desktop = window.matchMedia('(min-width: 64rem)');
-  const onBreakpoint = () => {
-    if (desktop.matches && open && !toggle.classList.contains('menu-toggle-desktop')) setOpen(false);
-  };
-
   toggle.addEventListener('click', onToggle);
   close?.addEventListener('click', onClose);
   document.addEventListener('keydown', onKeydown);
   panel.addEventListener('click', onPanelClick);
-  desktop.addEventListener('change', onBreakpoint);
 
   return () => {
     setOpen(false);
@@ -212,7 +204,6 @@ export function initMenuPanel() {
     close?.removeEventListener('click', onClose);
     document.removeEventListener('keydown', onKeydown);
     panel.removeEventListener('click', onPanelClick);
-    desktop.removeEventListener('change', onBreakpoint);
   };
 }
 

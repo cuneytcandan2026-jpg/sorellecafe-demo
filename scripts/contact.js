@@ -326,20 +326,33 @@ export function initContact() {
   });
 
   /* ---- Submission ------------------------------------------------------ */
-  const summary = (form) => {
+  /* What was sent, in a sentence. Without an access key nothing was, so the
+     preview says so and describes what will happen once the form is
+     connected, instead of thanking the visitor for a request nobody got. */
+  const summary = (form, sent) => {
     const f = form.elements;
     const first = (f.name?.value || '').trim().split(/\s+/)[0];
     const thanks = first ? `Thank you, ${first}. ` : 'Thank you. ';
+    const unsent = 'was not sent, because this form is not connected yet. Once it is, it goes straight to the café, and they';
     switch (form.dataset.contactForm) {
       case 'book': {
         const n = Number(f.guests.value);
         const time = f.time.selectedOptions[0]?.textContent.trim();
-        return `${thanks}Your request for ${n} ${n === 1 ? 'guest' : 'guests'} on ${prettyDate(f.date.value)} at ${time} is with the café. It is not confirmed until they get back to you at ${f.email.value}.`;
+        const what = `Your request for ${n} ${n === 1 ? 'guest' : 'guests'} on ${prettyDate(f.date.value)} at ${time}`;
+        return sent
+          ? `${thanks}${what} is with the café. It is not confirmed until they get back to you at ${f.email.value}.`
+          : `${what} ${unsent} will get back to you at ${f.email.value} to confirm.`;
       }
-      case 'private-hire':
-        return `${thanks}Your ${f.occasion.value.toLowerCase()} enquiry for ${prettyDate(f.date.value)} is with the café. They will reply to ${f.email.value} to talk through what is possible.`;
+      case 'private-hire': {
+        const what = `Your ${f.occasion.value.toLowerCase()} enquiry for ${prettyDate(f.date.value)}`;
+        return sent
+          ? `${thanks}${what} is with the café. They will reply to ${f.email.value} to talk through what is possible.`
+          : `${what} ${unsent} will reply to ${f.email.value} to talk through what is possible.`;
+      }
       default:
-        return `${thanks}Your message is with the café and they will reply to ${f.email.value}.`;
+        return sent
+          ? `${thanks}Your message is with the café and they will reply to ${f.email.value}.`
+          : `Your message ${unsent} will reply to ${f.email.value}.`;
     }
   };
 
@@ -374,10 +387,8 @@ export function initContact() {
       return;
     }
 
-    const text = summary(form);
-
     if (!endpoint) {
-      showDone(form, `${text} (Preview: this form is not connected yet, so nothing was actually sent.)`);
+      showDone(form, summary(form, false));
       return;
     }
 
@@ -395,7 +406,7 @@ export function initContact() {
       if (!response.ok || body.success === false) {
         throw new Error(body.message || `status ${response.status}`);
       }
-      showDone(form, text);
+      showDone(form, summary(form, true));
     } catch (error) {
       console.error('[site] contact form failed', error);
       alert.textContent = phone

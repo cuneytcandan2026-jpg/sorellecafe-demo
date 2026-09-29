@@ -190,7 +190,9 @@ function initMenuFilter() {
     veg.setAttribute('aria-pressed', 'false');
     apply();
     if (bar.classList.contains('is-searching')) setSearching(false);
-    (getComputedStyle(input).display !== 'none' && input.offsetParent ? input : veg).focus();
+    // Focus the first control still on screen: on a phone the search field
+    // has just closed and the unpressed (V) toggle has gone with it.
+    [input, veg, toggle].find((el) => el?.getClientRects().length)?.focus();
   };
 
   // Following a link to something the filter has hidden clears the filter first.
@@ -320,12 +322,32 @@ function initSpy() {
   };
   barList?.addEventListener('focusin', onFocus);
 
+  // Where the tabs do not all fit (a narrow phone, or with the (V) toggle
+  // pressed), fade the edge that has more tabs beyond it, and only that one.
+  const fade = rafBatch(() => {
+    const max = barList.scrollWidth - barList.clientWidth;
+    const x = barList.scrollLeft;
+    const state = max <= 1 ? '' : x <= 1 ? 'end' : x >= max - 1 ? 'start' : 'both';
+    if (state) barList.dataset.fade = state;
+    else delete barList.dataset.fade;
+  });
+  const onBarScroll = () => fade();
+  const ro = barList && 'ResizeObserver' in window ? new ResizeObserver(onBarScroll) : null;
+  ro?.observe(barList);
+  barList?.addEventListener('scroll', onBarScroll, { passive: true });
+  // The row keeps its size when the web font arrives, but the tabs widen.
+  if (barList) document.fonts?.ready.then(onBarScroll);
+
   return () => {
     paint.cancel();
+    fade.cancel();
+    ro?.disconnect();
     mo.disconnect();
     window.removeEventListener('scroll', onScroll);
     window.removeEventListener('resize', onScroll);
     barList?.removeEventListener('focusin', onFocus);
+    barList?.removeEventListener('scroll', onBarScroll);
+    if (barList) delete barList.dataset.fade;
     toc?.classList.remove('is-live');
     for (const a of links) a.removeAttribute('aria-current');
   };

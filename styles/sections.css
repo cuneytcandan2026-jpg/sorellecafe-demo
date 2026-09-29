@@ -527,8 +527,13 @@ html[data-motion='reduced'] .row-link:focus-visible::after { opacity: 1; }
 }
 .lightbox .icon-btn:hover { background: var(--c-on-dark); color: var(--c-brand-deepest); }
 
+/* The stage's own track is sized from the space the dialog gives it, not from
+   the image: with an auto track the image's max-height: 100% resolved against
+   itself, and a portrait photo opened at its full 1364px, off the bottom of a
+   laptop screen and over its caption. */
 .lightbox-stage {
   display: grid;
+  grid-template: minmax(0, 1fr) / minmax(0, 1fr);
   place-items: center;
   min-height: 0;
 }
